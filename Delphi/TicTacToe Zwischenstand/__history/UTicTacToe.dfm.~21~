@@ -1,0 +1,176 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'TicTacToe f'#252'r ganz krasse'
+  ClientHeight = 567
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clHighlight
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnCreate = FormCreate
+  TextHeight = 15
+  object LabelPoints: TLabel
+    Left = 56
+    Top = 44
+    Width = 201
+    Height = 47
+    Caption = 'Punktestand:'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clHighlight
+    Font.Height = 47
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object LabelPointsSchow: TLabel
+    Left = 276
+    Top = 32
+    Width = 86
+    Height = 62
+    Caption = '0 : 0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -47
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object PanelTopLeft: TPanel
+    Left = 40
+    Top = 103
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object PanelTopMiddle: TPanel
+    Left = 168
+    Top = 103
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object PanelTopRight: TPanel
+    Left = 296
+    Top = 103
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  object PanelMiddleLeft: TPanel
+    Left = 40
+    Top = 223
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+  end
+  object PanelMiddleMiddle: TPanel
+    Left = 168
+    Top = 223
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
+  object PanelMiddleRight: TPanel
+    Left = 296
+    Top = 223
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+  end
+  object PanelBottomLeft: TPanel
+    Left = 40
+    Top = 343
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+  end
+  object PanelBottomMiddle: TPanel
+    Left = 168
+    Top = 343
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+  end
+  object PanelBottomRight: TPanel
+    Left = 296
+    Top = 343
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+  end
+  object Button1: TButton
+    Left = 56
+    Top = 455
+    Width = 329
+    Height = 25
+    Caption = 'Punkte zur'#252'cksetzen'
+    TabOrder = 9
+    OnClick = Button1Click
+  end
+  object ButtonNewGame: TButton
+    Left = 56
+    Top = 486
+    Width = 329
+    Height = 25
+    Caption = 'Neues Spiel'
+    TabOrder = 10
+    OnClick = ButtonNewGameClick
+  end
+end

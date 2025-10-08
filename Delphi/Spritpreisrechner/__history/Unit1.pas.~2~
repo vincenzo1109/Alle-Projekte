@@ -1,0 +1,39 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    EditKm: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditLiter: TEdit;
+    Button1: TButton;
+    Label3: TLabel;
+    LabelOutput: TLabel;
+    procedure Calculate(Sender: TObject);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Calculate(Sender: TObject);
+begin
+   var consumption:Real;
+   consumption := (StrToFloat(EditLiter.Text) / StrToFloat(EditKm.Text)) * 100;
+   LabelOutput.Caption := FloatToStr(consumption)	;
+end;
+
+end.

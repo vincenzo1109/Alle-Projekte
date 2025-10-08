@@ -1,0 +1,146 @@
+object FormRechner: TFormRechner
+  Left = 0
+  Top = 0
+  Caption = 'Rechner'
+  ClientHeight = 258
+  ClientWidth = 232
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object LabelA: TLabel
+    Left = 40
+    Top = 16
+    Width = 25
+    Height = 17
+    Caption = 'a ='
+  end
+  object LabelB: TLabel
+    Left = 40
+    Top = 59
+    Width = 25
+    Height = 14
+    Caption = 'b ='
+  end
+  object Label1: TLabel
+    Left = 9
+    Top = 99
+    Width = 56
+    Height = 15
+    Caption = 'Ergebnis ='
+  end
+  object ButtonMultiplication: TButton
+    Left = 151
+    Top = 136
+    Width = 33
+    Height = 33
+    Caption = 'x'
+    TabOrder = 0
+    OnClick = ButtonMultiplicationClick
+  end
+  object EditA: TEdit
+    Left = 71
+    Top = 13
+    Width = 155
+    Height = 25
+    TabOrder = 1
+  end
+  object EditB: TEdit
+    Left = 71
+    Top = 56
+    Width = 155
+    Height = 25
+    TabOrder = 2
+  end
+  object EditOutput: TEdit
+    Left = 71
+    Top = 96
+    Width = 155
+    Height = 25
+    TabOrder = 3
+  end
+  object ButtonAddition: TButton
+    Left = 72
+    Top = 136
+    Width = 33
+    Height = 33
+    Caption = '+'
+    TabOrder = 4
+    OnClick = ButtonAdditionClick
+  end
+  object ButtonSubtraktion: TButton
+    Left = 111
+    Top = 136
+    Width = 34
+    Height = 33
+    Caption = '-'
+    TabOrder = 5
+    OnClick = ButtonSubtraktionClick
+  end
+  object ButtonDivision: TButton
+    Left = 190
+    Top = 136
+    Width = 33
+    Height = 33
+    Caption = '/'
+    TabOrder = 6
+    OnClick = ButtonDivisionClick
+  end
+  object ButtonDIV: TButton
+    Left = 72
+    Top = 175
+    Width = 33
+    Height = 33
+    Caption = 'DIV'
+    TabOrder = 7
+    OnClick = ButtonDIVClick
+  end
+  object ButtonMOD: TButton
+    Left = 111
+    Top = 175
+    Width = 33
+    Height = 33
+    Caption = 'MOD'
+    TabOrder = 8
+    OnClick = ButtonMODClick
+  end
+  object ButtonAB: TButton
+    Left = 151
+    Top = 175
+    Width = 33
+    Height = 33
+    Caption = 'a^b'
+    TabOrder = 9
+    OnClick = ButtonABClick
+  end
+  object ButtonSquare: TButton
+    Left = 190
+    Top = 175
+    Width = 33
+    Height = 33
+    Caption = #8730'a'
+    TabOrder = 10
+    OnClick = ButtonSquareClick
+  end
+  object ButtonFakultaet: TButton
+    Left = 72
+    Top = 214
+    Width = 33
+    Height = 33
+    Caption = 'a!'
+    TabOrder = 11
+    OnClick = ButtonFakultaetClick
+  end
+  object ButtonMitte: TButton
+    Left = 111
+    Top = 214
+    Width = 33
+    Height = 33
+    Caption = 'Mitte'
+    TabOrder = 12
+    OnClick = ButtonMitteClick
+  end
+end

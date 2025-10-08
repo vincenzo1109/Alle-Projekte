@@ -1,0 +1,230 @@
+unit URechner;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Math,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  Taa = class(TForm)
+    ButtonMultiplication: TButton;
+    LabelA: TLabel;
+    EditA: TEdit;
+    EditB: TEdit;
+    LabelB: TLabel;
+    EditOutput: TEdit;
+    LabelOutputOperationen: TLabel;
+    ButtonAddition: TButton;
+    ButtonSubtraktion: TButton;
+    ButtonDivision: TButton;
+    ButtonDIV: TButton;
+    ButtonMOD: TButton;
+    ButtonAB: TButton;
+    ButtonSquare: TButton;
+    ButtonFakultaet: TButton;
+    ButtonMitte: TButton;
+    LabelOperationenCaption: TLabel;
+    LabelPeopleCaption: TLabel;
+    LabelPeopleInput: TLabel;
+    EditPeople: TEdit;
+    LabelOutputPeople: TLabel;
+    EditOutputPeople: TEdit;
+    ButtonCalculatePeople: TButton;
+    Button1: TButton;
+    ButtonDivRest: TButton;
+    procedure ButtonAdditionClick(Sender: TObject);
+    procedure ButtonSubtraktionClick(Sender: TObject);
+    procedure ButtonMultiplicationClick(Sender: TObject);
+    procedure ButtonDivisionClick(Sender: TObject);
+    procedure ButtonDIVClick(Sender: TObject);
+    procedure ButtonMODClick(Sender: TObject);
+    procedure ButtonABClick(Sender: TObject);
+    procedure ButtonSquareClick(Sender: TObject);
+    procedure ButtonFakultaetClick(Sender: TObject);
+    procedure ButtonMitteClick(Sender: TObject);
+    procedure ButtonCalculatePeopleClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure ButtonDivRestClick(Sender: TObject);
+
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  aa: Taa;
+
+implementation
+
+{$R *.dfm}
+
+procedure Taa.Button1Click(Sender: TObject);
+var
+  a, b: integer;
+begin
+  a := StrToInt(EditA.Text);
+  b := 0;
+  while a <> 0 do
+  begin
+    b := b + (a Mod 10);
+    a := a div 10;
+  end;
+  EditOutput.Text := IntToStr(b);
+end;
+
+procedure Taa.ButtonDivRestClick(Sender: TObject);
+var a, b, c, d : integer;
+begin
+StrToInt(EditA.Text);
+StrToInt(EditB.Text);
+
+c := a Div b;
+d := a Mod b;
+
+EditOutput.Text := IntToStr(c) + 'Rest' + IntToStr(d);
+end;
+
+procedure Taa.ButtonABClick(Sender: TObject);
+var
+  a, c: real;
+  I, b: integer;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToInt(EditB.Text);
+
+  c := Power(a, b);
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonAdditionClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToFloat(EditB.Text);
+
+  c := a + b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonCalculatePeopleClick(Sender: TObject);
+var
+  I, a, b: integer;
+  t: real;
+begin
+  a := StrToInt(EditPeople.Text);
+  t := 0;
+  b := 365;
+  for I := b Downto 365 - a do
+  begin
+    t := I / 365;
+  end;
+  t := 1 - t;
+  EditOutputPeople.Text := FloatToStr(t);
+end;
+
+procedure Taa.ButtonDIVClick(Sender: TObject);
+var
+  a, b: integer;
+  c: real;
+begin
+  a := StrToInt(EditA.Text);
+  b := StrToInt(EditB.Text);
+
+  c := a DIV b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonDivisionClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToFloat(EditB.Text);
+
+  c := a / b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonFakultaetClick(Sender: TObject);
+var
+  a, I, c: integer;
+begin
+  a := StrToInt(EditA.Text);
+  c := 1;
+  for I := a Downto 1 do
+  begin
+    c := c * I;
+  end;
+
+  EditOutput.Text := IntToStr(c);
+end;
+
+procedure Taa.ButtonMitteClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToFloat(EditB.Text);
+
+  c := (a + b) / 2;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonMODClick(Sender: TObject);
+var
+  a, b: integer;
+  c: real;
+begin
+  a := StrToInt(EditA.Text);
+  b := StrToInt(EditB.Text);
+
+  c := a Mod b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonMultiplicationClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToFloat(EditB.Text);
+
+  c := a * b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonSquareClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+
+  c := sqrt(a);
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+procedure Taa.ButtonSubtraktionClick(Sender: TObject);
+var
+  a, b, c: real;
+begin
+  a := StrToFloat(EditA.Text);
+  b := StrToFloat(EditB.Text);
+
+  c := a - b;
+
+  EditOutput.Text := FloatToStr(c);
+end;
+
+end.

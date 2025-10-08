@@ -1,0 +1,92 @@
+unit Zufallsgenerator;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids;
+
+type
+  TForm1 = class(TForm)
+    LabelLastNo: TLabel;
+    LabelLastNoTx: TLabel;
+    LabelNowNoTx: TLabel;
+    LabelNowNo: TLabel;
+    ButtonGen: TButton;
+    StringGridNo: TStringGrid;
+    ListBox1: TListBox;
+    procedure ButtonGenClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure StringGridNoDrawCell(Sender: TObject; ACol, ARow: Integer;
+      Rect: TRect; State: TGridDrawState);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+const
+  NoSelection: TGridRect = (Left: 0; Top: - 1; Right: 0; Bottom: - 1);
+
+var
+  Form1: TForm1;
+  RowLastNo, ColLastNo: Integer;
+  oldnum: string;
+
+implementation
+
+{$R *.dfm}
+
+// Create
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  StringGridNo.Selection := NoSelection;
+  RowLastNo := -1;
+  ColLastNo := -1;
+  // M(eine) V(ersusche) LB
+  ListBox1.Items.Add('Zahlenhistorie');
+end;
+
+// Generieren
+procedure TForm1.ButtonGenClick(Sender: TObject);
+begin
+  RowLastNo := Random(9);
+  ColLastNo := Random(10);
+  StringGridNo.Refresh();
+
+  // MV Spalte (10) fix
+  if ColLastNo = 9 then
+    oldnum := IntToStr(RowLastNo + 10)
+  else
+    oldnum := IntToStr(RowLastNo) + IntToStr(ColLastNo + 1);
+
+  // MV oldnum Zeile (0) fix
+ // if RowLastNo = 1 then
+  
+
+
+  // MV LB add
+  ListBox1.Items.Add(oldnum);
+end;
+
+// Markieren
+procedure TForm1.StringGridNoDrawCell(Sender: TObject; ACol, ARow: Integer;
+  Rect: TRect; State: TGridDrawState);
+begin
+  const
+    tFormat = DT_SINGLELINE or DT_CENTER or DT_VCENTER;
+  var
+    tText: String;
+  if (RowLastNo = ARow) and (ColLastNo = ACol) then
+  begin
+    StringGridNo.Canvas.Brush.Color := clYellow; // HintergrundFarbe
+  end;
+  StringGridNo.Canvas.FillRect(Rect); // Hintergrund zeichnen
+  tText := IntToStr(10 * ARow + 1 + ACol);
+  DrawText(StringGridNo.Canvas.Handle, PChar(tText), Length(tText),
+    Rect, tFormat);
+
+end;
+
+end.

@@ -1,0 +1,40 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TSpritverbauch_Programm = class(TForm)
+    EditKm: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditLiter: TEdit;
+    Button1: TButton;
+    Label3: TLabel;
+    LabelOutput: TLabel;
+    procedure Calculate(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  Spritverbauch_Programm: TSpritverbauch_Programm;
+
+implementation
+
+{$R *.dfm}
+
+procedure TSpritverbauch_Programm.Calculate(Sender: TObject);
+begin
+   var consumption:Real;
+   consumption := (StrToFloat(EditLiter.Text) / StrToFloat(EditKm.Text)) * 100;
+   LabelOutput.Caption := FloatToStr(consumption) + 'L/100km';
+end;
+
+end.

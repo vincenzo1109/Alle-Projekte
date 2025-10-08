@@ -1,0 +1,25 @@
+Alle:
+Verlinkung v. anderen Webseiten
+Impressum
+Icons ändern
+Im Footer Kontakt hinzufügen (vcf)
+Verlinkung ändern (TR)
+
+Taschenrechner:
+Website Footer / Header
+andere Rechenoperationen
+TicTacToe hinzufügen
+
+Lebenslauf:
+title pic
+Kontakt Vertikal anordnen (Schrift+Logo)
+
+Neue Website als Start:
+Wer bin ich was mach ich so. Was sind Projekte usw.
+
+
+
+PHP lernen:
+Verlauf der Spiele mit Array und Title für eine Sitzung machen
+https://youtu.be/ZTz1qKoFsHo
+Notion

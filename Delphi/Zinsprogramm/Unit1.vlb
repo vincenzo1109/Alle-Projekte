@@ -1,0 +1,16 @@
+﻿[Button1]
+Coordinates=10,146,59,58
+
+[EditCredit]
+Coordinates=248,10,71,58
+
+[EditInterestRate]
+Coordinates=10,78,107,58
+
+[Label1]
+Coordinates=190,78,53,58
+
+[]
+Coordinates=10,10,85,58
+Visible=True
+

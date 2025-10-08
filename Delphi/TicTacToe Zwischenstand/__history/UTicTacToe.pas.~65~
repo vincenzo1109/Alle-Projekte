@@ -1,0 +1,218 @@
+unit UTicTacToe;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    PanelTopLeft: TPanel;
+    PanelTopMiddle: TPanel;
+    PanelTopRight: TPanel;
+    PanelMiddleLeft: TPanel;
+    PanelMiddleMiddle: TPanel;
+    PanelMiddleRight: TPanel;
+    PanelBottomLeft: TPanel;
+    PanelBottomMiddle: TPanel;
+    PanelBottomRight: TPanel;
+    LabelPoints: TLabel;
+    LabelPointsSchow: TLabel;
+    Button1: TButton;
+    ButtonNewGame: TButton;
+    RadioGroup1: TRadioGroup;
+    procedure PanelTopLeftClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure ButtonNewGameClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure WirHabenGewinner(PlayerString: String);
+    procedure ShowField();
+    procedure neuesSpiel();
+    procedure Unentschieden();
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  Form1: TForm1;
+  mes: boolean;
+  a, x, o, AllCaptions: integer;
+  panels: array [1 .. 9] of TPanel;
+  fieldShow: array [1 .. 9] of char;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  x := 0;
+  o := 0;
+  LabelPointsSchow.Caption := '0 : 0';
+end;
+
+procedure TForm1.ShowField();
+var
+  i: integer;
+begin
+  for i := 1 to 9 do
+    panels[i].Caption := fieldShow[i];
+end;
+
+procedure TForm1.ButtonNewGameClick(Sender: TObject);
+begin
+  neuesSpiel();
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  i: integer;
+begin
+  a := 0;
+  panels[1] := PanelTopLeft;
+  panels[2] := PanelTopMiddle;
+  panels[3] := PanelTopRight;
+  panels[4] := PanelMiddleLeft;
+  panels[5] := PanelMiddleMiddle;
+  panels[6] := PanelMiddleRight;
+  panels[7] := PanelBottomLeft;
+  panels[8] := PanelBottomMiddle;
+  panels[9] := PanelBottomRight;
+  for i := 1 to 9 do
+  begin
+    panels[i].Tag := i;
+    panels[i].OnClick := PanelTopLeftClick;
+  end;
+  mes := False;
+  neuesSpiel();
+end;
+
+procedure TForm1.PanelTopLeftClick(Sender: TObject);
+var
+  index, i, j, b: integer;
+begin
+
+  index := (Sender as TComponent).Tag;
+  if mes = False then
+  begin
+    if panels[index].Caption = ' ' then
+    begin
+      b := 0;
+      a := a + 1;
+
+      if a mod 2 = 1 then
+        fieldShow[index] := 'X'
+      else
+        fieldShow[index] := 'O';
+
+      // Prüfung Zeilen
+      for i := 0 to 2 do
+      begin
+        if ((fieldShow[i * 3 + 1] = fieldShow[i * 3 + 2]) AND
+          (fieldShow[i * 3 + 2] = fieldShow[i * 3 + 3])) then
+        begin
+          if (fieldShow[i * 3 + 1] <> ' ') then
+            WirHabenGewinner(fieldShow[i * 3 + 1])
+        end;
+      end;
+
+      // Prüfung Spalten
+      for i := 0 to 2 do
+      begin
+        if ((fieldShow[i + 1] = fieldShow[i + 4]) AND
+          (fieldShow[i + 4] = fieldShow[i + 7])) then
+        begin
+          if (fieldShow[i + 4] <> ' ') then
+          begin
+            WirHabenGewinner(fieldShow[i + 4]);
+          end;
+        end;
+      end;
+
+      // Prüfung Diagonale\
+      i := 0;
+      if ((fieldShow[i + 1] = fieldShow[i + 5]) AND
+        (fieldShow[i + 5] = fieldShow[i + 9])) then
+      begin
+        if (fieldShow[i + 9] <> ' ') then
+        begin
+          WirHabenGewinner(fieldShow[i + 9]);
+        end;
+      end;
+
+      // Prüfung Diagonale/
+      i := 0;
+      if ((fieldShow[i + 3] = fieldShow[i + 5]) AND
+        (fieldShow[i + 5] = fieldShow[i + 7])) then
+      begin
+        if (fieldShow[i + 7] <> ' ') then
+        begin
+          WirHabenGewinner(fieldShow[i + 7]);
+        end;
+      end;
+      ShowField()
+    end
+    else
+      MessageDlg('Schon belegt', mtWarning, [mbOK, mbYes], 0);
+
+    for j := 1 to 9 do
+      if fieldShow[j] <> ' ' then
+      begin
+        b := b + 1;
+        if b > 8 then
+          Unentschieden();
+      end;
+  end
+  else
+    MessageDlg('Du musst die andere Message bestätigen', mtWarning,
+      [mbOK, mbYes], 0);
+end;
+
+procedure TForm1.WirHabenGewinner(PlayerString: String);
+var
+  i: integer;
+begin
+  ShowField();
+  if PlayerString = 'X' then
+  // X hat gewonnen
+  begin
+    mes := True;
+    MessageDlg('X hat gewonnen', mtWarning, [mbOK], 0);
+    mes := False;
+    x := x + 1;
+  end
+  else
+
+  begin
+    // Y hat gewonnen
+    mes := True;
+    MessageDlg('O hat gewonnen', mtWarning, [mbOK], 0);
+    mes := False;
+    o := o + 1;
+  end;
+
+  neuesSpiel();
+end;
+
+procedure TForm1.neuesSpiel();
+var
+  i: integer;
+begin
+  for i := 1 to 9 do
+    fieldShow[i] := ' ';
+  ShowField();
+  LabelPointsSchow.Caption := IntToStr(x) + ' : ' + IntToStr(o);
+  a := 0;
+end;
+
+procedure TForm1.Unentschieden();
+begin
+  MessageDlg('Keiner hat gewonnen... Es ist ein Unentschieden', mtWarning,
+    [mbOK], 0);
+end;
+
+end.

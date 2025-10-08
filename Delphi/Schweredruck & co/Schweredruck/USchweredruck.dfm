@@ -1,0 +1,79 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Berechnung Schweredruck'
+  ClientHeight = 229
+  ClientWidth = 303
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object LabelDensity: TLabel
+    Left = 8
+    Top = 16
+    Width = 135
+    Height = 15
+    Caption = 'Dichte von der Fl'#252'ssigkeit'
+  end
+  object LabelHigh: TLabel
+    Left = 114
+    Top = 45
+    Width = 29
+    Height = 15
+    Caption = 'H'#246'he'
+  end
+  object LabelG: TLabel
+    Left = 133
+    Top = 71
+    Width = 7
+    Height = 15
+    Caption = 'g'
+  end
+  object LabelSD: TLabel
+    Left = 66
+    Top = 179
+    Width = 77
+    Height = 15
+    Caption = 'Schweredruck:'
+  end
+  object EditDensity: TEdit
+    Left = 149
+    Top = 13
+    Width = 121
+    Height = 23
+    TabOrder = 0
+  end
+  object EditHigh: TEdit
+    Left = 149
+    Top = 42
+    Width = 121
+    Height = 23
+    TabOrder = 1
+  end
+  object EditG: TEdit
+    Left = 149
+    Top = 71
+    Width = 121
+    Height = 23
+    TabOrder = 2
+  end
+  object ButtonCaculate: TButton
+    Left = 168
+    Top = 116
+    Width = 89
+    Height = 38
+    Caption = 'Berechne'
+    TabOrder = 3
+    OnClick = ButtonCaculateClick
+  end
+  object EditSD: TEdit
+    Left = 149
+    Top = 176
+    Width = 121
+    Height = 23
+    TabOrder = 4
+  end
+end

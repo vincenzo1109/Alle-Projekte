@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.673,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Spritpreisrechner\Spritvebrauch_Rechner.dproj=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Spritpreisrechner\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.716,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Spritpreisrechner\Unit1.dfm=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.311,=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.716,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Spritpreisrechner\Unit1.pas=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.565,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Spritpreisrechner\Project1.dproj=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

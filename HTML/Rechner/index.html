@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script rel="text/javascript" src="logic.js"></script>
+    <meta charset="UTF-8">
+    <title>Taschenrechner</title>
+    <link rel="icon" href="img/favicon.ico" type="image/png"/>
+</head>
+<body>
+<header>
+    <div id="logo-div">
+        <img src="img/Logo.png" alt="Logo" class="Logo-png"/>
+    </div>
+    <div id="header-div">
+        <h1 class="Überschrift">Taschenrechner</h1>
+        <h2>Ich habe auf dieser Website zum ersten mal JavaScript programmieren probiert</h2>
+    </div>
+</header>
+
+<section id="test">
+    <p id="Zwischen-Uberschrift">Ein kleiner Taschenrechner zum Test von JavaScript</p>
+    <div id="NumbInput">
+        <label for="number1">Nummer 1: <input type="number" id="number1" placeholder="Enter the first number"></label>
+        <label for="number2">Nummer 2: <input type="number" id="number2" placeholder="Enter the second number"></label>
+    </div>
+    <div id="operator">
+    <button onclick="auslesen(addition)">+</button>
+    <button onclick="auslesen(subtraction)">-</button>
+    <button onclick="auslesen(division)">/</button>
+    <button onclick="auslesen(multiplication)">*</button>
+    <button onclick="auslesen(Faculty)">!</button>
+    <button onclick="auslesen(squareroot)">√</button>
+    <button onclick="auslesen(Square)">x^2</button>
+    </div>
+    <output id="Output1"></output>
+    <p>Hinweis: Bei Fakultät, Wurzel ziehen und Quadrieren gilt nur die erste Zahl</p>
+</section>
+
+<footer>
+    <div class="Impressum"><strong>Impressum</strong>
+        Vincent Bienert
+        Heinrich-Beck-Str. 23
+        09112 Chemnitz
+    </div>
+    <div class="divider"></div>
+    <div id="div-Website">
+        <label for="Websites">Andere selbst programmierte Seiten: </label>
+        <select id="Websites" onchange="window.location.href=this.value;">
+            <option id="start" value="" selected>Projekt auswählen</option>
+            <option value="">-----------</option>
+            <option value="https://explicit-songs2.netlify.app/">Explicit Songs</option>
+            <option value="https://vincent-bienert.netlify.app/">Lebenslauf</option>
+            <option value="https://vincent-tictactoe.netlify.app/">TicTacToe</option>
+        </select>
+    </div>
+    <div class="divider"></div>
+    <div class="Impressum">
+        <strong>Kontakt</strong> <br>
+        <a href="mailto:bienert.website@dfgh.net">Email: bienert.website@gmail.com</a>
+        <a href="tel:0178/6091472"> Telefon-Nummer: 01786091472</a>
+        <a href="https://www.instagram.com/vincenzo_2048/">Instagram: @vincenzo_2048</a>
+        <a href="https://github.com/vincenzo1109">GitHub: @vincenzo1109</a>
+    </div>
+</footer>
+</body>
+</html>

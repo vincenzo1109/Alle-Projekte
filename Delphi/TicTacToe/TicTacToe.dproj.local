@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.321,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\TicTacToe\UTicTacToe.dfm=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.884,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\TicTacToe\TicTacToe.dproj=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.321,C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\TicTacToe\UTicTacToe.pas=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.684,=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.102,=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.460,=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.586,=C:\Users\p15vs\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

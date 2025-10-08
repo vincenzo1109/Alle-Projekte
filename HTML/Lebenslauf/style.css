@@ -1,0 +1,238 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18pt;
+    margin: 0;
+    background-color: #ff6744;
+    text-align: center;
+}
+
+header {
+    position: relative;
+    font-size: 22pt;
+    background: #265f93;
+    padding: 1px;
+    font-style: normal;
+    color: whitesmoke;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 988px) {
+    body {
+        width: 100%;
+        height: 100%;
+        transform-origin: center;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        gap: 10px;
+    }
+
+    .Logo-png {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+
+    }
+    #header-div {
+        width: 60%;
+    }
+
+    footer {
+        font-size: 70%;
+    }
+
+    footer a {
+        padding-bottom: 8px;
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 1340px) {
+
+    footer a {
+        padding-bottom: 8px;
+        text-decoration: underline;
+    }
+
+    footer {
+        font-size: 80%;
+    }
+}
+
+header p {
+    font-style: italic;
+}
+
+section {
+    font-size: 18pt;
+    background-color: white;
+}
+
+section h1 {
+    text-decoration: underline;
+}
+
+.Bild-div {
+    position: relative;
+    display: flex;
+    margin: 10px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.Bild .oben-Rechts {
+    position: absolute;
+    margin: 10px;
+    max-width: 30%;
+    max-height: 50%;
+    border-radius: 10px;
+    top: 2%;
+    right: 2%;
+
+}
+
+.Bild .unten-Links {
+    position: absolute;
+    margin: 10px;
+    max-width: 30%;
+    max-height: 50%;
+    border-radius: 10px;
+    bottom: 2%;
+    left: 2%;
+    justify-items: center;
+}
+
+.Bild div {
+    flex: 1;
+}
+
+.Logo-png {
+    width: 10%;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.Bild {
+
+    display: flex;
+    position: relative;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 4px 7px 11px 2px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 80%;
+    gap: 50px;
+}
+
+.ohneBild {
+    position: relative;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 4px 7px 11px 2px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    border: 2px solid black;
+
+    width: 80%;
+}
+
+footer {
+    grid-area: footer;
+    position: relative;
+    display: flex;
+    background: #a04bff;
+    text-align: center;
+    justify-items: center;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px;
+    width: 100%;
+    gap: 40px;
+    margin: 0 auto;
+    bottom: 0;
+}
+
+h2 {
+    font-size: 22pt;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: black;
+}
+
+a {
+    color: black;
+}
+
+.Fähigkeiten {
+
+}
+
+progress {
+    display: block;
+    margin: auto;
+    border-radius: 15px;
+    width: 100%;
+    border: 2px solid black;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 7px 3px rgba(0, 0, 0, 0.5);
+}
+
+progress::-webkit-progress-value {
+    border-radius: 10px;
+    background: linear-gradient(to right, #b10000 0%, orange 40%, yellow 60%, #0dca0d 100%);
+
+}
+
+progress::-webkit-progress-bar {
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+progress::-moz-progress-bar {
+    background: linear-gradient(to right, #b10000 0%, orange 40%, yellow 60%, #0dca0d 100%);
+    border-radius: 10px;
+}
+
+.Fähigkeiten p {
+    margin: 20px auto 5px auto;
+}
+
+.Impressum {
+    display: flex;
+    flex-direction: column;
+    white-space: pre-line;
+    width: 33%;
+}
+
+.divider {
+    border-left: 5px solid black;
+    height: 100px;
+}
+#div-Website {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+}
+
+#div-Website select {
+    width: 55%;
+    color: black;
+    border: 3px solid black;
+    border-radius: 7px;
+    padding: 5px;
+    text-align: center;
+    background: rgba(101, 82, 239, 0.75);
+}

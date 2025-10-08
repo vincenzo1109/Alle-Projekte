@@ -1,0 +1,88 @@
+unit UPrimzahlSieb;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    ListBoxTrue: TListBox;
+    ListBoxFalse: TListBox;
+    Button2: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  ListBoxTrue.Items.Clear;
+  ListBoxTrue.Items.Add('Primzahlen:');
+  ListBoxFalse.Items.Clear;
+  ListBoxFalse.Items.Add('keine Primzahlen:');
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  ListBoxTrue.Items.Clear;
+  ListBoxTrue.Items.Add('Primzahlen:');
+  ListBoxFalse.Items.Clear;
+  ListBoxFalse.Items.Add('keine Primzahlen:');
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  ZahlenArray: Array of boolean;
+  i, j, anzahl: Integer;
+begin
+  // Variablen zuweisen
+  anzahl := StrToInt(Edit1.Text);
+  SetLength(ZahlenArray, anzahl + 1);
+  j := 0;
+  // Array auf True setzen
+  for i := 1 to anzahl do
+    ZahlenArray[i] := True;
+  ZahlenArray[1] := False;
+  // Überprüfung
+  for i := 1 to Trunc(Sqrt(anzahl)) do
+  begin
+    If ZahlenArray[i] then
+    begin
+
+      j := i + i;
+      while j <= anzahl do
+      begin
+        ZahlenArray[j] := False;
+        j := j + i;
+      end;
+    end;
+  end;
+  // Ausgabe
+  for i := 1 to anzahl do
+  begin
+    if ZahlenArray[i] then
+      ListBoxTrue.Items.Add(IntToStr(i))
+    else
+      ListBoxFalse.Items.Add(IntToStr(i));
+  end;
+
+end;
+
+end.

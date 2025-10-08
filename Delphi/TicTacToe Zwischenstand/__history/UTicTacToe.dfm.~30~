@@ -1,0 +1,210 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'TicTacToe f'#252'r ganz krasse'
+  ClientHeight = 567
+  ClientWidth = 393
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clHighlight
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnCreate = FormCreate
+  TextHeight = 15
+  object LabelPoints: TLabel
+    Left = 32
+    Top = 98
+    Width = 201
+    Height = 47
+    Caption = 'Punktestand:'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clDarkcyan
+    Font.Height = 47
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object LabelPointsSchow: TLabel
+    Left = 272
+    Top = 98
+    Width = 75
+    Height = 54
+    Alignment = taCenter
+    Caption = '0 : 0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clDarkcyan
+    Font.Height = -40
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object PanelTopLeft: TPanel
+    Left = 32
+    Top = 151
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object PanelTopMiddle: TPanel
+    Left = 149
+    Top = 151
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object PanelTopRight: TPanel
+    Left = 264
+    Top = 151
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  object PanelMiddleLeft: TPanel
+    Left = 32
+    Top = 271
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+  end
+  object PanelMiddleMiddle: TPanel
+    Left = 149
+    Top = 271
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
+  object PanelMiddleRight: TPanel
+    Left = 264
+    Top = 271
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+  end
+  object PanelBottomLeft: TPanel
+    Left = 32
+    Top = 391
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+  end
+  object PanelBottomMiddle: TPanel
+    Left = 149
+    Top = 391
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+  end
+  object PanelBottomRight: TPanel
+    Left = 264
+    Top = 391
+    Width = 100
+    Height = 100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlight
+    Font.Height = -107
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+  end
+  object Button1: TButton
+    Left = 32
+    Top = 503
+    Width = 332
+    Height = 25
+    Caption = 'Punkte zur'#252'cksetzen'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = cl3DLight
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 9
+    OnClick = Button1Click
+  end
+  object ButtonNewGame: TButton
+    Left = 32
+    Top = 534
+    Width = 332
+    Height = 25
+    Caption = 'Neues Spiel'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = cl3DLight
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+    OnClick = ButtonNewGameClick
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 32
+    Top = 8
+    Width = 332
+    Height = 74
+    Caption = 'Spieltyp-Wahl'
+    Color = cl3DLight
+    DefaultHeaderFont = False
+    HeaderFont.Charset = DEFAULT_CHARSET
+    HeaderFont.Color = clHighlight
+    HeaderFont.Height = -13
+    HeaderFont.Name = 'Segoe UI'
+    HeaderFont.Style = []
+    Items.Strings = (
+      '2 Spieler'
+      'Computer f'#228'ngt an'
+      'Computer spielt als zweites')
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 11
+  end
+end

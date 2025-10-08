@@ -1,0 +1,25 @@
+.DialogBox {
+    background-image: url(../img/Dialog_Box.jpg);
+    padding: 30px;
+    font-size: 22pt;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    position: absolute;
+    bottom: 30px;
+    border-radius: 10px;
+    border: 6px solid gold;
+    box-shadow: 0 0 50px #cfb200;
+    font-weight: bold;
+}
+
+body {
+    color: white;
+    font-family: "Cascadia Mono", monospace;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #000000;
+}

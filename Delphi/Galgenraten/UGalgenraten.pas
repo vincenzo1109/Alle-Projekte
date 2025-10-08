@@ -1,0 +1,83 @@
+unit UGalgenraten;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Math;
+
+type
+  TForm1 = class(TForm)
+    EditInp: TEdit;
+    LabelInp: TLabel;
+    ButtonTry: TButton;
+    LabelWordOut: TLabel;
+    procedure ButtonTryClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  Form1: TForm1;
+  currentArray, lguessword : integer;
+  currentword, Labelword, Labelstate, vglword: string;
+  wortliste :array[1..10] of string;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TForm1.ButtonTryClick(Sender: TObject);
+var i : Integer;
+    userguess: char;
+
+begin
+
+userguess := (lowercase(EditInp.Text)[1]);
+
+vglword := Labelstate;
+
+
+for i := 1 to lguessword do
+
+ if currentword[i] = userguess then
+   Labelstate[i*2-1] := userguess;
+
+
+if vglword = Labelstate then
+ShowMessage('Der Buchtsabe ist leider nicht enthalten');
+
+LabelWordOut.Caption := Labelstate;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+currentArray := Random(10);
+
+wortliste[1] :=  'hund';
+wortliste[2] :=  'haus';
+wortliste[3] :=  'maus';
+wortliste[4] :=  'flasche';
+wortliste[5] :=  'lampe';
+wortliste[6] :=  'buch';
+wortliste[7] :=  'computer';
+wortliste[8] :=  'locher';
+wortliste[9] :=  'whiteboard';
+wortliste[10] := 'papier';
+
+currentword := wortliste[currentArray];
+lguessword := length(currentword);
+
+Labelword := '_ _ _ _ _ _ _ _ _ _';
+Delete(Labelword, lguessword*2, 20);
+Labelstate := Labelword;
+
+LabelWordOut.Caption := Labelstate;
+end;
+
+end.

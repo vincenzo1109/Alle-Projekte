@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.728,C:\Users\p15vs\Desktop\Programmieren\Project1.dproj=C:\Users\p15vs\Desktop\Programmieren\Galgenraten.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.027,C:\Users\p15vs\Desktop\Programmieren\Galgenraten.dproj=C:\Users\p15vs\Desktop\Programmieren\Delphi\Galgenraten\Galgenraten.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.294,C:\Users\p15vs\Desktop\Programmieren\Unit1.dfm=C:\Users\p15vs\Desktop\Programmieren\UGalgenraten.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.294,C:\Users\p15vs\Desktop\Programmieren\Unit1.pas=C:\Users\p15vs\Desktop\Programmieren\UGalgenraten.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.305,C:\Users\p15vs\Desktop\Programmieren\UGalgenraten.pas=C:\Users\p15vs\Desktop\Programmieren\Delphi\Galgenraten\UGalgenraten.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.305,C:\Users\p15vs\Desktop\Programmieren\UGalgenraten.dfm=C:\Users\p15vs\Desktop\Programmieren\Delphi\Galgenraten\UGalgenraten.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.370,=C:\Users\p15vs\Desktop\Programmieren\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

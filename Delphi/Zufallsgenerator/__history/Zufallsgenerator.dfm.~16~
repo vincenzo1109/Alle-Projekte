@@ -1,0 +1,82 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Vincent3000'
+  ClientHeight = 490
+  ClientWidth = 582
+  Color = clBlack
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clNone
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnCreate = FormCreate
+  TextHeight = 15
+  object LabelLastNo: TLabel
+    Left = 75
+    Top = 8
+    Width = 3
+    Height = 15
+    Color = clYellow
+    ParentColor = False
+    Transparent = False
+  end
+  object LabelLastNoTx: TLabel
+    Left = 0
+    Top = 8
+    Width = 57
+    Height = 15
+    Caption = 'Letzte Zahl'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clOlive
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = False
+  end
+  object LabelNowNoTx: TLabel
+    Left = 320
+    Top = 8
+    Width = 69
+    Height = 15
+    Caption = 'Aktuelle Zahl'
+    Color = clGreen
+    ParentColor = False
+  end
+  object LabelNowNo: TLabel
+    Left = 403
+    Top = 8
+    Width = 3
+    Height = 15
+    Color = clLime
+    ParentColor = False
+    Transparent = False
+  end
+  object ButtonGen: TButton
+    Left = 0
+    Top = 385
+    Width = 369
+    Height = 49
+    Caption = 'generieren'
+    TabOrder = 0
+    OnClick = ButtonGenClick
+  end
+  object StringGridNo: TStringGrid
+    Left = 0
+    Top = 48
+    Width = 369
+    Height = 331
+    ColCount = 10
+    DefaultColWidth = 35
+    DefaultRowHeight = 35
+    Enabled = False
+    FixedCols = 0
+    RowCount = 9
+    FixedRows = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goFixedRowDefAlign]
+    TabOrder = 1
+    OnDrawCell = StringGridNoDrawCell
+  end
+end
