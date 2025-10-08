@@ -88,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(leading: const Icon(Symbols.experiment),title: Text('Errungenschaften')),
             ListTile(leading: const Icon(Symbols.settings),title: Text('Einstellungen')),
             ListTile(leading: const Icon(Symbols.info), title: Text('Impressum')),
+
           ],
         ),
       ),
