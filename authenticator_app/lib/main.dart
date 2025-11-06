@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:otp/otp.dart';
 import 'dart:async';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:base32/base32.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'package:timezone/timezone.dart' as timezone;
@@ -27,7 +26,6 @@ final Map<String, IconData> issuerIconMap = {
   'github': SimpleIcons.github,
   'steam': SimpleIcons.steam,
   'spotify': SimpleIcons.spotify,
-  'dropbox': SimpleIcons.dropbox,
   'netflix': SimpleIcons.netflix,
   'apple': SimpleIcons.apple,
   'paypal': SimpleIcons.paypal,
@@ -70,7 +68,6 @@ final Map<String, IconData> issuerIconMap = {
   'dropbox': SimpleIcons.dropbox,
   'etsy': SimpleIcons.etsy,
   'flutter': SimpleIcons.flutter,
-  'flutter': SimpleIcons.flutter,
   'gitlab': SimpleIcons.gitlab,
   'gmail': SimpleIcons.gmail,
   'googlechrome': SimpleIcons.googlechrome,
@@ -98,7 +95,6 @@ final Map<String, IconData> issuerIconMap = {
   'stripe': SimpleIcons.stripe,
   'svelte': SimpleIcons.svelte,
   'swift': SimpleIcons.swift,
-  'telegram': SimpleIcons.telegram,
   'tensorflow': SimpleIcons.tensorflow,
   'typescript': SimpleIcons.typescript,
   'ubuntu': SimpleIcons.ubuntu,
@@ -106,7 +102,6 @@ final Map<String, IconData> issuerIconMap = {
   'wordpress': SimpleIcons.wordpress,
   'yelp': SimpleIcons.yelp,
   'zendesk': SimpleIcons.zendesk,
-  'zoom': SimpleIcons.zoom,
   'zulip': SimpleIcons.zulip,
 };
 
@@ -198,13 +193,6 @@ class QRCodeScan extends StatelessWidget {
                       QRcodeString.split('otpauth://totp/')[1].split('?')[0];
 
                   if (secret != null) {
-                    String code = OTP.generateTOTPCodeString(
-                      secret,
-                      DateTime.now().millisecondsSinceEpoch,
-                      length: 6,
-                      algorithm: Algorithm.SHA1,
-                      isGoogle: true,
-                    );
 
                     var box = Hive.box('Secrets');
                     box.put(secretNum, secret);

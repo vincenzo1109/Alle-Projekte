@@ -15,6 +15,9 @@
       <excludeFolder url="file://$MODULE_DIR$/planzen_app/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/planzen_app/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/planzen_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

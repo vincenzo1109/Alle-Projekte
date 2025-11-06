@@ -1,53 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-
+import 'package:planzen_app/settings.dart';
+import 'search.dart';
+import 'achievements.dart';
+import 'impressum.dart';
+import 'plants_overview.dart';
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  var darkMode = true;
+  var theme = ThemeData.dark();
+
+  void setTheme(bool darkMode) {
+    setState(() {
+      theme = darkMode ? ThemeData.dark() : ThemeData.light();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      theme: theme.copyWith(
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          toolbarHeight: 70,
+          titleTextStyle: theme.textTheme.titleLarge?.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(size: 30), // Drawer + Actions Icons
+        ),
       ),
+
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+      initialRoute: '/home',
+
+      debugShowCheckedModeBanner: false,
+
+      routes: {
+        '/home': (context) => const MyHomePage(title: 'main'),
+        '/search': (context) => const Search(title: 'search'),
+        '/settings': (context) => const Settings(title: 'settings'),
+        '/impressum': (context) => const Impressum(title: 'impressum'),
+        '/achievements': (context) => const Achievements(title: 'achievements'),
+        '/plants_overview': (context) =>
+            const PlantsOverview(title: 'plants_overview'),
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -56,19 +74,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -77,23 +82,83 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-   return Scaffold(
-      appBar: AppBar(title: Text('Meine App')),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Plan(t)er:\n Die Pflanzenübersicht',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        iconTheme: IconThemeData(size: 30),
+        actions: [
+          IconButton(
+            padding: EdgeInsets.all(15),
+            icon: Icon(Symbols.search),
+            onPressed: () {
+              Navigator.pushNamed(context, '/search');
+            },
+          ),
+        ],
+      ),
       drawer: Drawer(
         child: ListView(
-          children: const [
+          children: [
             DrawerHeader(child: Text('Menü')),
-            ListTile(leading: const Icon(Symbols.home), title: Text('Home')),
-            ListTile(leading: const Icon(Symbols.potted_plant_rounded), title: Text('Pflanzen verwalten')),
-            ListTile(leading: const Icon(Symbols.experiment),title: Text('Errungenschaften')),
-            ListTile(leading: const Icon(Symbols.settings),title: Text('Einstellungen')),
-            ListTile(leading: const Icon(Symbols.info), title: Text('Impressum')),
-
+            ListTile(
+              leading: Icon(Symbols.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: Icon(Symbols.potted_plant_rounded),
+              title: Text('Pflanzen Details'),
+              onTap: () {
+                Navigator.pushNamed(context, '/plants_overview');
+              },
+            ),
+            ListTile(
+              leading: Icon(Symbols.experiment),
+              title: Text('Errungenschaften'),
+              onTap: () {
+                Navigator.pushNamed(context, '/achievements');
+              },
+            ),
+            ListTile(
+              leading: Icon(Symbols.settings),
+              title: Text('Einstellungen'),
+              onTap: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+            ListTile(
+              leading: Icon(Symbols.info),
+              title: Text('Impressum'),
+              onTap: () {
+                Navigator.pushNamed(context, '/impressum');
+              },
+            ),
           ],
         ),
       ),
-      body: Center(child: Text('Hauptinhalt')),
-    // This trailing comma makes auto-formatting nicer for build methods.
+      body: ListView(
+        children: [
+          Column(
+            children: [Expanded(child: Center(child: plants_homescreen()))],
+          ),
+        ],
+      ),
     );
+  }
+
+  List<Widget> plants_homescreen() {
+    List<Widget> plantsNext = [];
+
+    for (int i = 0; i < 5; i++) {
+      plantsNext.add(Text('Test ob es klappt'));
+    }
+    return plantsNext;
   }
 }
