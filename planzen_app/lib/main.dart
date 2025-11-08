@@ -5,7 +5,7 @@ import 'search.dart';
 import 'achievements.dart';
 import 'impressum.dart';
 import 'plants_overview.dart';
-import 'dart:convert';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
+  @override
+  void initState() {
+    super.initState();
+    existingPlants();
+  }
+
   var darkMode = true;
   var theme = ThemeData.dark();
 
@@ -143,22 +148,55 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: ListView(
-        children: [
-          Column(
-            children: [Expanded(child: Center(child: plants_homescreen()))],
-          ),
-        ],
-      ),
+      body: ListView(children: plants_Homescreen()),
     );
   }
 
-  List<Widget> plants_homescreen() {
+  List<Widget> plants_Homescreen() {
     List<Widget> plantsNext = [];
-
-    for (int i = 0; i < 5; i++) {
-      plantsNext.add(Text('Test ob es klappt'));
+    for (var plantvar in MyPlants) {
+      plantsNext.add(
+        ListTile(
+          title: Center(
+            child: Text(plantvar.name, style: TextStyle(fontSize: 20)),
+          ),
+          subtitle: Center(
+            child: Text(
+              'Alter: ${plantvar.alter} Jahre (seit dem ${plantvar.lasttime} '
+                  'nicht mehr gemacht)',
+            ),
+          ),
+        ),
+      );
     }
     return plantsNext;
   }
+}
+
+DateTime now = new DateTime.now();
+DateTime date = new DateTime(now.year, now.month, now.day);
+var formatter = DateFormat('dd.MM.yyyy HH:mm');
+    String formattedDate = formatter.format(now);
+
+List<allPlants> MyPlants = [];
+
+void existingPlants() {
+  addPlantMyPlants('Rose', 2, formattedDate);
+  addPlantMyPlants('Himbeere', 4, formattedDate);
+}
+
+void addPlantMyPlants(String nameinc, var alterinc, var lasttime) {
+  int alter = alterinc;
+  String name = nameinc;
+  MyPlants.add(allPlants(name, alter, lasttime));
+  allPlants $name = allPlants(name, alter, lasttime);
+}
+
+class allPlants {
+  String name;
+  int alter;
+  var lasttime;
+
+  //constructor
+  allPlants(this.name, this.alter, this.lasttime);
 }
