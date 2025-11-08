@@ -57,6 +57,7 @@ class _MyHomePageState extends State<Settings> {
     activated = (appState?.theme.brightness == Brightness.dark);
   }
 
+
   Widget build(BuildContext context) {
     final appState = context.findAncestorStateOfType<MyAppState>();
     return Scaffold(
