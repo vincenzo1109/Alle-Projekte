@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/settings.dart';
@@ -79,6 +80,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<allPlants> plantsListHomeScreen = [];
+
+  @override
+  void initState() {
+    super.initState();
+    plantsListHomeScreen = List.from(MyPlants);
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -93,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(
           'Plan(t)er:\n Die Pflanzenübersicht',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         iconTheme: IconThemeData(size: 30),
         actions: [
@@ -154,17 +163,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> plants_Homescreen() {
     List<Widget> plantsNext = [];
-    for (var plantvar in MyPlants) {
+    for (var plantvar in plantsListHomeScreen) {
+      DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lasttime);
+      int notDoneSince = now.difference(savedDate).inDays;
+      DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
+      String dueDateString = DateFormat('dd.MM').format(dueDate);
+      var expiredSince = now.difference(dueDate).inDays;
+
       plantsNext.add(
         ListTile(
+          tileColor: dueDate.isBefore(now) ? Colors.red : null,
+          leading: Text(dueDateString, style: TextStyle(fontSize: 20,color: Colors.black)),
           title: Center(
-            child: Text(plantvar.name, style: TextStyle(fontSize: 20)),
+            child: Text(
+              '${plantvar.name} ${plantvar.whatToDo}',
+              style: TextStyle(fontSize: 20),
+            ),
           ),
           subtitle: Center(
             child: Text(
-              'Alter: ${plantvar.alter} Jahre (seit dem ${plantvar.lasttime} '
-                  'nicht mehr gemacht)',
+              dueDate.isBefore(now)
+                  ? 'Seit $expiredSince Tagen abgelaufen'
+                  : 'seit $notDoneSince Tagen nicht mehr gemacht',
+              textAlign: TextAlign.center,
             ),
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              setState(() {
+                plantsListHomeScreen.remove(plantvar);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Wieder etwas erledigt :)',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+            icon: Icon(Icons.check),
           ),
         ),
       );
@@ -175,28 +217,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
 DateTime now = new DateTime.now();
 DateTime date = new DateTime(now.year, now.month, now.day);
-var formatter = DateFormat('dd.MM.yyyy HH:mm');
-    String formattedDate = formatter.format(now);
+var formatter = DateFormat('dd.MM.yyyy');
+//    String formattedDate = formatter.format(now); //Für richtiges Programm
+String formattedDate = '07.11.2025'; // Vorrübergehende Lösung
 
 List<allPlants> MyPlants = [];
 
 void existingPlants() {
-  addPlantMyPlants('Rose', 2, formattedDate);
-  addPlantMyPlants('Himbeere', 4, formattedDate);
+  addPlantMyPlants('Rose', 2, '08.11.2025', 'düngen', 14);
+  addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
+  addPlantMyPlants('Erdbeerem', 3, formattedDate, 'ernten', 365);
+  addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
 }
 
-void addPlantMyPlants(String nameinc, var alterinc, var lasttime) {
+void addPlantMyPlants(
+  String nameinc,
+  var alterinc,
+  var lasttime,
+  String whatToDo,
+  int interval,
+) {
   int alter = alterinc;
   String name = nameinc;
-  MyPlants.add(allPlants(name, alter, lasttime));
-  allPlants $name = allPlants(name, alter, lasttime);
+
+  MyPlants.add(allPlants(name, alter, lasttime, whatToDo, interval));
+  allPlants $name = allPlants(name, alter, lasttime, whatToDo, interval);
 }
 
 class allPlants {
   String name;
   int alter;
   var lasttime;
+  String whatToDo;
+  int interval;
 
   //constructor
-  allPlants(this.name, this.alter, this.lasttime);
+  allPlants(this.name, this.alter, this.lasttime, this.whatToDo, this.interval);
 }
