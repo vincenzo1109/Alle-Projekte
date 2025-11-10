@@ -164,8 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> plantsNext = [];
     for (var plantvar in plantsListHomeScreen) {
       DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lasttime);
-      int notDoneSince = now.difference(savedDate).inDays;
       DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
+      int doItInDays = dueDate.difference(now).inDays;
       String dueDateString = DateFormat('dd.MM').format(dueDate);
       var expiredSince = now.difference(dueDate).inDays;
 
@@ -176,14 +176,14 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Center(
             child: Text(
               '${plantvar.name} ${plantvar.whatToDo}',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20), textAlign: TextAlign.center,
             ),
           ),
           subtitle: Center(
             child: Text(
               dueDate.isBefore(now)
-                  ? 'Seit $expiredSince Tagen abgelaufen'
-                  : 'seit $notDoneSince Tagen nicht mehr gemacht',
+                  ? 'Seit $expiredSince Tag(en) überfällig'
+                  : 'In $doItInDays Tag(en) anfällig',
               textAlign: TextAlign.center,
             ),
           ),
@@ -227,6 +227,8 @@ void existingPlants() {
   addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
   addPlantMyPlants('Erdbeerem', 3, formattedDate, 'ernten', 365);
   addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
+  addPlantMyPlants('Löwenzahn', 1, '02.11.2025', 'ausrotten', 7);
+  addPlantMyPlants('Hanf-Pflanze', 1, '02.11.2025', 'verarbeiten', 90);
 }
 
 void addPlantMyPlants(
