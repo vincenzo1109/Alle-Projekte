@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/settings.dart';
@@ -80,7 +79,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<allPlants> plantsListHomeScreen = [];
+  List<AllPlants> plantsListHomeScreen = [];
 
   @override
   void initState() {
@@ -173,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
       plantsNext.add(
         ListTile(
           tileColor: dueDate.isBefore(now) ? Colors.red : null,
-          leading: Text(dueDateString, style: TextStyle(fontSize: 20,color: Colors.black)),
+          leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
           title: Center(
             child: Text(
               '${plantvar.name} ${plantvar.whatToDo}',
@@ -221,7 +220,7 @@ var formatter = DateFormat('dd.MM.yyyy');
 //    String formattedDate = formatter.format(now); //Für richtiges Programm
 String formattedDate = '07.11.2025'; // Vorrübergehende Lösung
 
-List<allPlants> MyPlants = [];
+List<AllPlants> MyPlants = [];
 
 void existingPlants() {
   addPlantMyPlants('Rose', 2, '08.11.2025', 'düngen', 14);
@@ -233,24 +232,24 @@ void existingPlants() {
 void addPlantMyPlants(
   String nameinc,
   var alterinc,
-  var lasttime,
+  String lasttime,
   String whatToDo,
   int interval,
 ) {
   int alter = alterinc;
   String name = nameinc;
 
-  MyPlants.add(allPlants(name, alter, lasttime, whatToDo, interval));
-  allPlants $name = allPlants(name, alter, lasttime, whatToDo, interval);
+  AllPlants plant = AllPlants(name, alter, lasttime, whatToDo, interval);
+  MyPlants.add(plant);
 }
 
-class allPlants {
+class AllPlants {
   String name;
   int alter;
-  var lasttime;
+  String lasttime;
   String whatToDo;
   int interval;
 
   //constructor
-  allPlants(this.name, this.alter, this.lasttime, this.whatToDo, this.interval);
+  AllPlants(this.name, this.alter, this.lasttime, this.whatToDo, this.interval);
 }
