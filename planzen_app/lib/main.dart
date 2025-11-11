@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    plantsListHomeScreen = List.from(MyPlants);
+    plantsListHomeScreen = List.from(myPlants);
   }
 
   @override
@@ -156,12 +156,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: ListView(children: plants_Homescreen()),
+      body: ListView(children: plantsHomescreen()),
     );
   }
 
-  List<Widget> plants_Homescreen() {
+  List<Widget> plantsHomescreen() {
     List<Widget> plantsNext = [];
+
+
+    void sortList() {
+      plantsListHomeScreen.sort((a, b) {
+        var dueA = DateFormat(
+          'dd.MM.yyyy',
+        ).parse(a.lasttime).add(Duration(days: a.interval));
+        var dueB = DateFormat(
+          'dd.MM.yyyy',
+        ).parse(b.lasttime).add(Duration(days: b.interval));
+
+        return dueA.compareTo(dueB);
+      });
+    }
+
+    sortList();
     for (var plantvar in plantsListHomeScreen) {
       DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lasttime);
       DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
@@ -176,21 +192,25 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Center(
             child: Text(
               '${plantvar.name} ${plantvar.whatToDo}',
-              style: TextStyle(fontSize: 20), textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
             ),
           ),
           subtitle: Center(
             child: Text(
               dueDate.isBefore(now)
-                  ? 'Seit $expiredSince Tag(en) überfällig'
-                  : 'In $doItInDays Tag(en) anfällig',
+                  ? (expiredSince == 1
+                        ? 'Seit $expiredSince Tag überfällig'
+                        : 'Seit $expiredSince Tagen überfällig')
+                  : (doItInDays == 1
+                        ? 'In $doItInDays Tagw anfällig'
+                        : 'In $doItInDays Tagen anfällig'),
               textAlign: TextAlign.center,
             ),
           ),
           trailing: IconButton(
             onPressed: () {
               setState(() {
-                plantsListHomeScreen.remove(plantvar);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -203,6 +223,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 );
+                plantvar.lasttime = DateFormat('dd.MM.yyyy').format(now);
+                sortList();
               });
             },
             icon: Icon(Icons.check),
@@ -214,20 +236,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-DateTime now = new DateTime.now();
-DateTime date = new DateTime(now.year, now.month, now.day);
+DateTime now = DateTime.now();
+DateTime date = DateTime(now.year, now.month, now.day);
 var formatter = DateFormat('dd.MM.yyyy');
 //    String formattedDate = formatter.format(now); //Für richtiges Programm
 String formattedDate = '07.11.2025'; // Vorrübergehende Lösung
 
-List<AllPlants> MyPlants = [];
+List<AllPlants> myPlants = [];
 
 void existingPlants() {
   addPlantMyPlants('Rose', 2, '08.11.2025', 'düngen', 14);
   addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
-  addPlantMyPlants('Erdbeerem', 3, formattedDate, 'ernten', 365);
+  addPlantMyPlants('Erdbeerem', 3, '31.08.2025', 'ernten', 365);
   addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
-  addPlantMyPlants('Löwenzahn', 1, '02.11.2025', 'ausrotten', 7);
+  addPlantMyPlants('Löwenzahn', 1, '01.11.2025', 'ausrotten', 7);
   addPlantMyPlants('Hanf-Pflanze', 1, '02.11.2025', 'verarbeiten', 90);
 }
 
@@ -242,7 +264,7 @@ void addPlantMyPlants(
   String name = nameinc;
 
   AllPlants plant = AllPlants(name, alter, lasttime, whatToDo, interval);
-  MyPlants.add(plant);
+  myPlants.add(plant);
 }
 
 class AllPlants {
