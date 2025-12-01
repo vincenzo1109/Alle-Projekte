@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:planzen_app/newPlant.dart';
 import 'package:planzen_app/settings.dart';
 import 'search.dart';
 import 'achievements.dart';
@@ -10,14 +13,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'main.g.dart';
 
+//var for Hive-Keys (easier (Autocompletion); no spelling Mistakes)
 String objectPlantKey = 'plantObjectSaves';
 String dataKey = 'dataSaves';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(AllPlantsAdapter());
-  await Hive.openBox(dataKey);
-  await Hive.openBox(objectPlantKey);
+  Hive.registerAdapter(AllPlantsAdapter()); //Hive-Adapter for Object-Saving
+  await Hive.openBox(dataKey); //Hive-Create of Box for any other Data
+  await Hive.openBox(objectPlantKey); //Hive-Create for plantObjects
   runApp(const MyApp());
 }
 
@@ -49,6 +53,7 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme.copyWith(
+        //copies the Theme but changes the AppBar (Font size, Style,…)
         appBarTheme: AppBarTheme(
           centerTitle: true,
           toolbarHeight: 70,
@@ -74,7 +79,8 @@ class MyAppState extends State<MyApp> {
         '/achievements': (context) => const Achievements(title: 'achievements'),
         '/plants_overview': (context) =>
             const PlantsOverview(title: 'plants_overview'),
-      },
+        '/newPlant': (context) => const NewPlant(title: 'newPlant'),
+      }, //easier to switch between Screens; its the declaration of the routes
     );
   }
 }
@@ -89,8 +95,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<AllPlants> plantsListHomeScreenFirstStart = [];
-  List<AllPlants> plantsListHomeScreenNotFirstStart = [];
+  List<AllPlants> plantsListHomeScreen = [];
 
   var plantDataBox = Hive.box(dataKey);
   var plantObjectBox = Hive.box(objectPlantKey);
@@ -98,29 +103,23 @@ class _MyHomePageState extends State<MyHomePage> {
   void getObjectList() {
     var objectList = (plantObjectBox.get('plantObjectList'));
     if (objectList != null) {
-      plantsListHomeScreenNotFirstStart = (objectList as List)
+      plantsListHomeScreen = (objectList as List)
           .cast<AllPlants>();
     } else {
-        print('Fehler beim getObjectList()');
+      debugPrint('Fehler beim getObjectList()');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    plantsListHomeScreenFirstStart = myPlants;
-    var openend = plantDataBox.get('alreadyOpened', defaultValue: false);
-    openend? getObjectList() : {};
+
+    var opened = plantDataBox.get('alreadyOpened', defaultValue: false);
+    opened ? getObjectList() : plantsListHomeScreen = myPlants;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -168,8 +167,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(Symbols.add_2_rounded),
               title: Text('Eine weitere Pflanze hinzufügen'),
-              onTap: () {
-                Navigator.pushNamed(context, '/impressum');
+              onTap: () async {
+                await Navigator.pushNamed(context, '/newPlant');
+                setState(() {});
               },
             ),
             ListTile(
@@ -189,13 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: plantDataBox.get('alreadyOpened', defaultValue: false)
-          ? ListView(
-              children: plantsHomescreen(plantsListHomeScreenNotFirstStart),
-            )
-          : ListView(
-              children: plantsHomescreen(plantsListHomeScreenFirstStart),
-            ),
+      body: ListView(children: plantsHomescreen(plantsListHomeScreen),)
     );
   }
 
@@ -208,10 +202,10 @@ class _MyHomePageState extends State<MyHomePage> {
       whichList.sort((a, b) {
         var dueA = DateFormat(
           'dd.MM.yyyy',
-        ).parse(a.lasttime).add(Duration(days: a.interval));
+        ).parse(a.lastTime).add(Duration(days: a.interval));
         var dueB = DateFormat(
           'dd.MM.yyyy',
-        ).parse(b.lasttime).add(Duration(days: b.interval));
+        ).parse(b.lastTime).add(Duration(days: b.interval));
 
         return dueA.compareTo(dueB);
       });
@@ -219,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     sortList();
     for (var plantvar in whichList) {
-      DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lasttime);
+      DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lastTime);
       DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
       int doItInDays = dueDate.difference(now).inDays;
       String dueDateString = DateFormat('dd.MM').format(dueDate);
@@ -257,17 +251,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       showCloseIcon: true,
+                      duration: Duration(seconds: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      behavior: SnackBarBehavior.floating,
                       action: SnackBarAction(
                         label: 'Rückgängig',
                         onPressed: () {
-                          plantvar.lasttime = lastLastTimeFunction(
-                            plantvar.lasttime,
+                          plantvar.lastTime = lastLastTimeFunction(
+                            plantvar.lastTime,
                             plantvar.interval,
                           );
                           plantvar.lastLastTime = lastLastTimeFunction(
                             plantvar.lastLastTime,
                             plantvar.interval,
                           );
+                          hivePutMyPlantsList(whichList);
+                          setState(() {});
                         },
                       ),
                       content: Text(
@@ -280,14 +281,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   );
-                  plantvar.lastLastTime = plantvar.lasttime;
-                  plantvar.lasttime = DateFormat('dd.MM.yyyy').format(now);
+                  plantvar.lastLastTime = plantvar.lastTime;
+                  plantvar.lastTime = DateFormat('dd.MM.yyyy').format(now);
                   hivePutMyPlantsList(whichList);
                   sortList();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       showCloseIcon: true,
+                      duration: Duration(seconds: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      behavior: SnackBarBehavior.floating,
                       content: Text(
                         '${plantvar.name} ${plantvar.whatToDo} hat noch Zeit :-)',
                         textAlign: TextAlign.center,
@@ -296,6 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
                     ),
                   );
                 }
@@ -306,7 +313,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }
-    getObjectList();
     return plantsNext;
   }
 }
@@ -319,31 +325,28 @@ String formattedDate = '07.11.2025'; // Vorrübergehende Lösung
 
 List<AllPlants> myPlants = [];
 
-lastLastTimeFunction(lasttime, interval) {
+lastLastTimeFunction(lastTime, interval) {
   DateTime lastLastTime = DateFormat(
     'dd.MM.yyyy',
-  ).parse(lasttime).subtract(Duration(days: interval));
-  String lastLastTimeString = lastLastTime.toString();
+  ).parse(lastTime).subtract(Duration(days: interval));
+  String lastLastTimeString = DateFormat('dd.MM.yyyy').format(lastLastTime);
   return lastLastTimeString;
 }
 
 void addPlantMyPlants(
-  String nameinc,
-  var alterinc,
-  String lasttime,
+  String name,
+  int age,
+  String lastTime,
   String whatToDo,
   int interval,
 ) {
-  int alter = alterinc;
-  String name = nameinc;
-
-  String lastLastTimeString = lastLastTimeFunction(lasttime, interval);
+  String lastLastTimeString = lastLastTimeFunction(lastTime, interval);
 
   AllPlants plant = AllPlants(
     name,
-    alter,
+    age,
     lastLastTimeString,
-    lasttime,
+    lastTime,
     whatToDo,
     interval,
   );
@@ -356,13 +359,13 @@ class AllPlants {
   String name;
 
   @HiveField(1)
-  int alter;
+  int age;
 
   @HiveField(2)
   String lastLastTime;
 
   @HiveField(3)
-  String lasttime;
+  String lastTime;
 
   @HiveField(4)
   int interval;
@@ -372,9 +375,9 @@ class AllPlants {
 
   AllPlants(
     this.name,
-    this.alter,
+    this.age,
     this.lastLastTime,
-    this.lasttime,
+    this.lastTime,
     this.whatToDo,
     this.interval,
   );

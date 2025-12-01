@@ -103,7 +103,7 @@
         <entry key="built_value">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/built_value-8.12.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/built_value-8.12.1/lib" />
             </list>
           </value>
         </entry>
@@ -166,8 +166,8 @@
         <entry key="crypto">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.7/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.6/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.7/lib" />
             </list>
           </value>
         </entry>
@@ -230,8 +230,8 @@
         <entry key="flutter_lints">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-5.0.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-6.0.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-5.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -357,32 +357,32 @@
         <entry key="leak_tracker">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker-11.0.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker-10.0.9/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker-11.0.2/lib" />
             </list>
           </value>
         </entry>
         <entry key="leak_tracker_flutter_testing">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.10/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.9/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.10/lib" />
             </list>
           </value>
         </entry>
         <entry key="leak_tracker_testing">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.2/lib" />
             </list>
           </value>
         </entry>
         <entry key="lints">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/lints-5.1.1/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/lints-6.0.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/lints-5.1.1/lib" />
             </list>
           </value>
         </entry>
@@ -417,8 +417,8 @@
         <entry key="meta">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.17.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.16.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.17.0/lib" />
             </list>
           </value>
         </entry>
@@ -433,6 +433,13 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/mobile_scanner-7.1.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="objective_c">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/objective_c-9.1.0/lib" />
             </list>
           </value>
         </entry>
@@ -474,18 +481,18 @@
         <entry key="path_provider_android">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.21/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.18/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.19/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.19/lib" />
             </list>
           </value>
         </entry>
         <entry key="path_provider_foundation">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.4/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.2/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.5.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
             </list>
           </value>
@@ -661,8 +668,8 @@
         <entry key="test_api">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.7.7/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.7.4/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.7.7/lib" />
             </list>
           </value>
         </entry>
@@ -711,16 +718,16 @@
         <entry key="vector_math">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
             </list>
           </value>
         </entry>
         <entry key="vm_service">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vm_service-15.0.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
             </list>
           </value>
         </entry>
@@ -790,7 +797,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.4.13/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-7.3.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/built_collection-5.1.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/built_value-8.12.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/built_value-8.12.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/chalkdart-3.0.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/checked_yaml-2.0.4/lib" />
@@ -841,6 +848,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.17.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/mime-2.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/mobile_scanner-7.1.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/objective_c-9.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/otp-3.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_config-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.9.1/lib" />
@@ -849,10 +857,10 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.18/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.19/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.21/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.22/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.4/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/lib" />
