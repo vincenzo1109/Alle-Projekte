@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/newPlant.dart';
@@ -213,10 +211,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     sortList();
     for (var plantvar in whichList) {
+
       DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lastTime);
       DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
+
       int doItInDays = dueDate.difference(now).inDays;
+
       String dueDateString = DateFormat('dd.MM').format(dueDate);
+
       var expiredSince = now.difference(dueDate).inDays;
 
       plantsNext.add(
@@ -259,14 +261,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       action: SnackBarAction(
                         label: 'Rückgängig',
                         onPressed: () {
-                          plantvar.lastTime = lastLastTimeFunction(
-                            plantvar.lastTime,
-                            plantvar.interval,
-                          );
-                          plantvar.lastLastTime = lastLastTimeFunction(
-                            plantvar.lastLastTime,
-                            plantvar.interval,
-                          );
+
+                          plantvar.lastTime= plantvar.lastLastTime ;
                           hivePutMyPlantsList(whichList);
                           setState(() {});
                         },
@@ -282,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                   plantvar.lastLastTime = plantvar.lastTime;
-                  plantvar.lastTime = DateFormat('dd.MM.yyyy').format(now);
+                  plantvar.lastTime = DateFormat('dd.MM.yyyy').format(DateTime.now());
                   hivePutMyPlantsList(whichList);
                   sortList();
                 } else {
