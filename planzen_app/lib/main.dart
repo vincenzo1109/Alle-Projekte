@@ -101,8 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void getObjectList() {
     var objectList = plantObjectBox.get('plantObjectList');
     if (objectList != null) {
-      plantsListHomeScreen = (objectList as List)
-          .cast<AllPlants>();
+      plantsListHomeScreen = (objectList as List).cast<AllPlants>();
       myPlants = plantsListHomeScreen;
     } else {
       debugPrint('Fehler beim getObjectList()');
@@ -188,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: ListView(children: plantsHomescreen(plantsListHomeScreen),)
+      body: ListView(children: plantsHomescreen(plantsListHomeScreen)),
     );
   }
 
@@ -208,8 +207,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     sortList();
     for (var plantvar in whichList) {
-
-      DateTime dueDate = plantvar.lastCompletion.add(Duration(days: plantvar.interval));
+      DateTime dueDate = plantvar.lastCompletion.add(
+        Duration(days: plantvar.interval),
+      );
 
       int doItInDays = dueDate.difference(now).inDays;
 
@@ -219,7 +219,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
       plantsNext.add(
         ListTile(
-          tileColor: dueDate.isBefore(now) ? Colors.red : null,
+          tileColor: dueDate.isBefore(now)
+              ? (dueDateString == DateFormat('dd.MM').format(now)
+                    ? Colors.blueAccent
+                    : null)
+              : (Colors.red),
           leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
           title: Center(
             child: Text(
@@ -230,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           subtitle: Center(
             child: Text(
-              dueDate.isAtSameMomentAs(now)
+              dueDateString == DateFormat('dd.MM').format(now)
                   ? 'Muss heute gemacht werden'
                   : (dueDate.isBefore(now)
                         ? (expiredSince == 1
@@ -257,8 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       action: SnackBarAction(
                         label: 'Rückgängig',
                         onPressed: () {
-
-                          plantvar.lastCompletion= plantvar.prevLastCompletion ;
+                          plantvar.lastCompletion = plantvar.prevLastCompletion;
                           hivePutMyPlantsList(whichList);
                           setState(() {});
                         },
@@ -294,7 +297,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                     ),
                   );
                 }
@@ -313,7 +315,9 @@ DateTime now = DateTime.now();
 DateTime date = DateTime(now.year, now.month, now.day);
 final formatter = DateFormat('dd.MM.yyyy');
 //    String formattedDate = formatter.format(now); //TODO Für richtiges Programm
-final formattedDate = formatter.parse('07.11.2025'); // TODO Vorrübergehende Lösung
+final formattedDate = formatter.parse(
+  '07.11.2025',
+); // TODO Vorrübergehende Lösung
 
 List<AllPlants> myPlants = [];
 
@@ -324,7 +328,6 @@ void addPlantMyPlants(
   String whatToDo,
   int interval,
 ) {
-
   AllPlants plant = AllPlants(
     name,
     age,
@@ -377,10 +380,28 @@ void existingPlants() {
   if (!alreadyOpened) {
     addPlantMyPlants('Rose', 2, formatter.parse('08.11.2025'), 'düngen', 14);
     addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
-    addPlantMyPlants('Erdbeeren', 3, formatter.parse('31.08.2025'), 'ernten', 6);
+    addPlantMyPlants(
+      'Erdbeeren',
+      3,
+      formatter.parse('31.08.2025'),
+      'ernten',
+      6,
+    );
     addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
-    addPlantMyPlants('Löwenzahn', 1, formatter.parse('01.11.2025'), 'ausrotten', 7);
-    addPlantMyPlants('Hanf-Pflanze', 1, formatter.parse('02.11.2025'), 'verarbeiten', 90);
+    addPlantMyPlants(
+      'Löwenzahn',
+      1,
+      formatter.parse('01.11.2025'),
+      'ausrotten',
+      7,
+    );
+    addPlantMyPlants(
+      'Hanf-Pflanze',
+      1,
+      formatter.parse('02.11.2025'),
+      'verarbeiten',
+      90,
+    );
     hivePutMyPlantsList(myPlants);
   }
 }
