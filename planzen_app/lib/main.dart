@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'package:planzen_app/newPlant.dart';
+import 'package:planzen_app/newplant.dart';
 import 'package:planzen_app/settings.dart';
 import 'search.dart';
 import 'achievements.dart';
@@ -99,10 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var plantObjectBox = Hive.box(objectPlantKey);
 
   void getObjectList() {
-    var objectList = (plantObjectBox.get('plantObjectList'));
+    var objectList = plantObjectBox.get('plantObjectList');
     if (objectList != null) {
       plantsListHomeScreen = (objectList as List)
           .cast<AllPlants>();
+      myPlants = plantsListHomeScreen;
     } else {
       debugPrint('Fehler beim getObjectList()');
     }
@@ -191,19 +192,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<Widget> plantsHomescreen(whichList) {
+  List<Widget> plantsHomescreen(List<AllPlants> whichList) {
     List<Widget> plantsNext = [];
     var boxHiveOpen = Hive.box(dataKey);
     boxHiveOpen.put('alreadyOpened', true);
 
     void sortList() {
       whichList.sort((a, b) {
-        var dueA = DateFormat(
-          'dd.MM.yyyy',
-        ).parse(a.lastTime).add(Duration(days: a.interval));
-        var dueB = DateFormat(
-          'dd.MM.yyyy',
-        ).parse(b.lastTime).add(Duration(days: b.interval));
+        var dueA = a.lastCompletion.add(Duration(days: a.interval));
+        var dueB = b.lastCompletion.add(Duration(days: b.interval));
 
         return dueA.compareTo(dueB);
       });
@@ -212,8 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
     sortList();
     for (var plantvar in whichList) {
 
-      DateTime savedDate = DateFormat('dd.MM.yyyy').parse(plantvar.lastTime);
-      DateTime dueDate = savedDate.add(Duration(days: plantvar.interval));
+      DateTime dueDate = plantvar.lastCompletion.add(Duration(days: plantvar.interval));
 
       int doItInDays = dueDate.difference(now).inDays;
 
@@ -262,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'Rückgängig',
                         onPressed: () {
 
-                          plantvar.lastTime= plantvar.lastLastTime ;
+                          plantvar.lastCompletion= plantvar.prevLastCompletion ;
                           hivePutMyPlantsList(whichList);
                           setState(() {});
                         },
@@ -277,8 +273,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   );
-                  plantvar.lastLastTime = plantvar.lastTime;
-                  plantvar.lastTime = DateFormat('dd.MM.yyyy').format(DateTime.now());
+                  plantvar.prevLastCompletion = plantvar.lastCompletion;
+                  plantvar.lastCompletion = DateTime.now();
                   hivePutMyPlantsList(whichList);
                   sortList();
                 } else {
@@ -315,33 +311,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
 DateTime now = DateTime.now();
 DateTime date = DateTime(now.year, now.month, now.day);
-var formatter = DateFormat('dd.MM.yyyy');
-//    String formattedDate = formatter.format(now); //Für richtiges Programm
-String formattedDate = '07.11.2025'; // Vorrübergehende Lösung
+final formatter = DateFormat('dd.MM.yyyy');
+//    String formattedDate = formatter.format(now); //TODO Für richtiges Programm
+final formattedDate = formatter.parse('07.11.2025'); // TODO Vorrübergehende Lösung
 
 List<AllPlants> myPlants = [];
-
-lastLastTimeFunction(lastTime, interval) {
-  DateTime lastLastTime = DateFormat(
-    'dd.MM.yyyy',
-  ).parse(lastTime).subtract(Duration(days: interval));
-  String lastLastTimeString = DateFormat('dd.MM.yyyy').format(lastLastTime);
-  return lastLastTimeString;
-}
 
 void addPlantMyPlants(
   String name,
   int age,
-  String lastTime,
+  DateTime lastTime,
   String whatToDo,
   int interval,
 ) {
-  String lastLastTimeString = lastLastTimeFunction(lastTime, interval);
 
   AllPlants plant = AllPlants(
     name,
     age,
-    lastLastTimeString,
+    lastTime.subtract(Duration(days: interval)),
     lastTime,
     whatToDo,
     interval,
@@ -358,10 +345,10 @@ class AllPlants {
   int age;
 
   @HiveField(2)
-  String lastLastTime;
+  DateTime prevLastCompletion;
 
   @HiveField(3)
-  String lastTime;
+  DateTime lastCompletion; //FIXME Use Date/DateTime/whatever
 
   @HiveField(4)
   int interval;
@@ -372,8 +359,8 @@ class AllPlants {
   AllPlants(
     this.name,
     this.age,
-    this.lastLastTime,
-    this.lastTime,
+    this.prevLastCompletion,
+    this.lastCompletion,
     this.whatToDo,
     this.interval,
   );
@@ -388,12 +375,12 @@ void existingPlants() {
   var boxHiveOpen = Hive.box(dataKey);
   bool alreadyOpened = boxHiveOpen.get('alreadyOpened', defaultValue: false);
   if (!alreadyOpened) {
-    addPlantMyPlants('Rose', 2, '08.11.2025', 'düngen', 14);
+    addPlantMyPlants('Rose', 2, formatter.parse('08.11.2025'), 'düngen', 14);
     addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
-    addPlantMyPlants('Erdbeeren', 3, '31.08.2025', 'ernten', 3);
+    addPlantMyPlants('Erdbeeren', 3, formatter.parse('31.08.2025'), 'ernten', 6);
     addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
-    addPlantMyPlants('Löwenzahn', 1, '01.11.2025', 'ausrotten', 7);
-    addPlantMyPlants('Hanf-Pflanze', 1, '02.11.2025', 'verarbeiten', 90);
+    addPlantMyPlants('Löwenzahn', 1, formatter.parse('01.11.2025'), 'ausrotten', 7);
+    addPlantMyPlants('Hanf-Pflanze', 1, formatter.parse('02.11.2025'), 'verarbeiten', 90);
     hivePutMyPlantsList(myPlants);
   }
 }

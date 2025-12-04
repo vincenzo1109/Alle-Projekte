@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND //TODO check if needed at ball
 
 part of 'main.dart';
 
@@ -19,8 +19,8 @@ class AllPlantsAdapter extends TypeAdapter<AllPlants> {
     return AllPlants(
       fields[0] as String,
       fields[1] as int,
-      fields[2] as String,
-      fields[3] as String,
+      fields[2] as DateTime,
+      fields[3] as DateTime,
       fields[5] as String,
       fields[4] as int,
     );
@@ -35,9 +35,9 @@ class AllPlantsAdapter extends TypeAdapter<AllPlants> {
       ..writeByte(1)
       ..write(obj.age)
       ..writeByte(2)
-      ..write(obj.lastLastTime)
+      ..write(obj.prevLastCompletion)
       ..writeByte(3)
-      ..write(obj.lastTime)
+      ..write(obj.lastCompletion)
       ..writeByte(4)
       ..write(obj.interval)
       ..writeByte(5)
