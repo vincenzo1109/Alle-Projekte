@@ -348,7 +348,7 @@ class AllPlants {
   DateTime prevLastCompletion;
 
   @HiveField(3)
-  DateTime lastCompletion; //FIXME Use Date/DateTime/whatever
+  DateTime lastCompletion;
 
   @HiveField(4)
   int interval;
