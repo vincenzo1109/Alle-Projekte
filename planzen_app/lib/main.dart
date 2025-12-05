@@ -217,95 +217,101 @@ class _MyHomePageState extends State<MyHomePage> {
 
       var expiredSince = now.difference(dueDate).inDays;
 
-      plantsNext.add(
-        ListTile(
-          tileColor: dueDate.isBefore(now)
-              ? (dueDateString == DateFormat('dd.MM').format(now)
-                    ? Colors.blueAccent
-                    : null)
-              : (Colors.red),
-          leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
-          title: Center(
-            child: Text(
-              '${plantvar.name} ${plantvar.whatToDo}',
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+      if (dueDate.subtract(Duration(days: 60)).isBefore(DateTime.now())) {
+        plantsNext.add(
+          ListTile(
+            tileColor: dueDate.isBefore(DateTime.now())
+                ? (dueDateString == DateFormat('dd.MM').format(now)
+                      ? Colors.blueAccent
+                      : Colors.red)
+                : (null),
+            leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
+            title: Center(
+              child: Text(
+                '${plantvar.name} ${plantvar.whatToDo}',
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          subtitle: Center(
-            child: Text(
-              dueDateString == DateFormat('dd.MM').format(now)
-                  ? 'Muss heute gemacht werden'
-                  : (dueDate.isBefore(now)
-                        ? (expiredSince == 1
-                              ? 'Seit $expiredSince Tag überfällig'
-                              : 'Seit $expiredSince Tagen überfällig')
-                        : (doItInDays == 1
-                              ? 'In $doItInDays Tag anfällig'
-                              : 'In $doItInDays Tagen anfällig')),
-              textAlign: TextAlign.center,
+            subtitle: Center(
+              child: Text(
+                dueDateString == DateFormat('dd.MM').format(now)
+                    ? 'Muss heute gemacht werden'
+                    : (dueDate.isBefore(now)
+                          ? (expiredSince == 1
+                                ? 'Seit $expiredSince Tag überfällig'
+                                : 'Seit $expiredSince Tagen überfällig')
+                          : (doItInDays == 1
+                                ? 'In $doItInDays Tag anfällig'
+                                : 'In $doItInDays Tagen anfällig')),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          trailing: IconButton(
-            onPressed: () {
-              setState(() {
-                if (dueDate.difference(now).inDays <= 4) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      showCloseIcon: true,
-                      duration: Duration(seconds: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      action: SnackBarAction(
-                        label: 'Rückgängig',
-                        onPressed: () {
-                          plantvar.lastCompletion = plantvar.prevLastCompletion;
-                          hivePutMyPlantsList(whichList);
-                          setState(() {});
-                        },
-                      ),
-                      content: Text(
-                        'Wieder etwas erledigt :)',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+            trailing: IconButton(
+              onPressed: () {
+                setState(() {
+                  if (dueDate.difference(now).inDays <= 4) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        showCloseIcon: true,
+                        duration: Duration(seconds: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        action: SnackBarAction(
+                          label: 'Rückgängig',
+                          onPressed: () {
+                            plantvar.lastCompletion =
+                                plantvar.prevLastCompletion;
+                            hivePutMyPlantsList(whichList);
+                            setState(() {});
+                          },
+                        ),
+                        content: Text(
+                          'Wieder etwas erledigt :)',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                  plantvar.prevLastCompletion = plantvar.lastCompletion;
-                  plantvar.lastCompletion = DateTime.now();
-                  hivePutMyPlantsList(whichList);
-                  sortList();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      showCloseIcon: true,
-                      duration: Duration(seconds: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      content: Text(
-                        '${plantvar.name} ${plantvar.whatToDo} hat noch Zeit :-)',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                    );
+                    plantvar.prevLastCompletion = plantvar.lastCompletion;
+                    plantvar.lastCompletion = DateTime.now();
+                    hivePutMyPlantsList(whichList);
+                    sortList();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        showCloseIcon: true,
+                        duration: Duration(seconds: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          '${plantvar.name} ${plantvar.whatToDo} hat noch Zeit :-)',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              });
-            },
-            icon: Icon(Icons.check),
+                    );
+                  }
+                });
+              },
+              icon: Icon(Icons.check),
+            ),
           ),
-        ),
-      );
+        );
+      }
+    }
+    if (plantsNext.isEmpty){
+      plantsNext.add(Text('Es gibt in den nächsten 2 Mnoaten nichts zu tun'));
     }
     return plantsNext;
   }

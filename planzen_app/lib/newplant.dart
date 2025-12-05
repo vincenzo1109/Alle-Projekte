@@ -35,22 +35,21 @@ class NewPlant extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<NewPlant> {
-  String name = '';
+  String? name;
   int age = 0;
   DateTime lastTime = DateTime.now();
   String whatToDo = '';
   bool wateringBool = true;
-  int interval = 0;
+  int? interval;
   bool ageOk = true;
   bool intervalOk = true;
+  bool nameOk = false;
 
   TextEditingController datePicked = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var allmediaWidth = MediaQuery.of(context).size.width.toInt() * 0.35;
-
-    whatToDo = 'gießen';
+    var allmediaWidth = MediaQuery.of(context).size.width.toInt() * 0.4;
 
     return Scaffold(
       appBar: AppBar(title: Text('Pflanze hinzufügen')),
@@ -64,9 +63,24 @@ class _MyHomePageState extends State<NewPlant> {
               width: allmediaWidth,
               child: TextField(
                 onChanged: (value) {
-                  name = value;
+                  var maybeString = value.isEmpty ? null : value;
+                  setState(() {
+                    if (maybeString != null) {
+                      name = maybeString;
+                      nameOk = true;
+                    } else {
+                      nameOk = false;
+                    }
+                  });
                 },
-                decoration: InputDecoration(hintText: 'Name'),
+                decoration: InputDecoration(
+                  hintText: 'Name',
+                  filled: !nameOk,
+                  fillColor: Colors.red,
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                ),
               ),
             ),
           ),
@@ -123,7 +137,7 @@ class _MyHomePageState extends State<NewPlant> {
                 width: allmediaWidth,
                 child: TextField(
                   onChanged: (value) {
-                    final maybeInt = value.isEmpty ? 0 : int.tryParse(value);
+                    final maybeInt = value.isEmpty ? null : int.tryParse(value);
                     setState(() {
                       if (maybeInt != null && maybeInt >= 0) {
                         interval = maybeInt;
@@ -173,8 +187,12 @@ class _MyHomePageState extends State<NewPlant> {
             ),
           TextButton(
             onPressed: () {
-              if (intervalOk && ageOk) {
-                addPlantMyPlants(name, age, lastTime, whatToDo, interval);
+              if (intervalOk && ageOk && name != null && interval != null) {
+                wateringBool
+                    ? whatToDo = 'gießen'
+                    : whatToDo = 'nicht angegeben';
+                setState(() {});
+                addPlantMyPlants(name!, age, lastTime, whatToDo, interval!);
                 hivePutMyPlantsList(myPlants);
                 Navigator.pop(context);
               } else {
@@ -194,7 +212,6 @@ class _MyHomePageState extends State<NewPlant> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   ),
                 );
               }
