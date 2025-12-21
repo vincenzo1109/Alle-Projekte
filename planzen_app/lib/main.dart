@@ -187,7 +187,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: ListView(children: plantsHomescreen(plantsListHomeScreen)),
+      body: RefreshIndicator(
+        child: ListView(children: plantsHomescreen(plantsListHomeScreen)),
+        onRefresh: () async {
+          setState(() {});
+        },
+      ),
     );
   }
 
@@ -249,6 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             trailing: IconButton(
               onPressed: () {
+                ScaffoldMessenger.of(context).clearSnackBars();
                 setState(() {
                   if (dueDate.difference(now).inDays <= 4) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -310,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       }
     }
-    if (plantsNext.isEmpty){
+    if (plantsNext.isEmpty) {
       plantsNext.add(Text('Es gibt in den nächsten 2 Mnoaten nichts zu tun'));
     }
     return plantsNext;

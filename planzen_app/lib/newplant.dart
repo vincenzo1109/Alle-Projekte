@@ -43,7 +43,7 @@ class _MyHomePageState extends State<NewPlant> {
   int? interval;
   bool ageOk = true;
   bool intervalOk = true;
-  bool nameOk = false;
+  bool nameOk = true;
 
   TextEditingController datePicked = TextEditingController();
 
@@ -196,6 +196,11 @@ class _MyHomePageState extends State<NewPlant> {
                 hivePutMyPlantsList(myPlants);
                 Navigator.pop(context);
               } else {
+                setState(() {
+                  intervalOk = false;
+                  ageOk = false;
+                  nameOk = false;
+                });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     showCloseIcon: true,
