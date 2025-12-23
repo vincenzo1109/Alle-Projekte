@@ -152,7 +152,11 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Symbols.potted_plant_rounded),
               title: Text('Pflanzen Details'),
               onTap: () {
-                Navigator.pushNamed(context, '/plants_overview');
+                Navigator.pushNamed(
+                  context,
+                  '/plants_overview',
+                  arguments: 'Drawer Plant',
+                );
               },
             ),
             ListTile(
@@ -225,12 +229,22 @@ class _MyHomePageState extends State<MyHomePage> {
       if (dueDate.subtract(Duration(days: 60)).isBefore(DateTime.now())) {
         plantsNext.add(
           ListTile(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/plants_overview',
+                arguments: plantvar.name,
+              );
+            },
+
             tileColor: dueDate.isBefore(DateTime.now())
                 ? (dueDateString == DateFormat('dd.MM').format(now)
                       ? Colors.blueAccent
                       : Colors.red)
                 : (null),
+
             leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
+
             title: Center(
               child: Text(
                 '${plantvar.name} ${plantvar.whatToDo}',
@@ -238,6 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textAlign: TextAlign.center,
               ),
             ),
+
             subtitle: Center(
               child: Text(
                 dueDateString == DateFormat('dd.MM').format(now)
@@ -252,6 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textAlign: TextAlign.center,
               ),
             ),
+
             trailing: IconButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).clearSnackBars();
@@ -317,7 +333,14 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
     if (plantsNext.isEmpty) {
-      plantsNext.add(Text('Es gibt in den nächsten 2 Mnoaten nichts zu tun'));
+      plantsNext.add(
+        Center(
+          child: Text(
+            'Es gibt in den nächsten 2 Monaten nichts zu tun',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+      );
     }
     return plantsNext;
   }

@@ -18,22 +18,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-
     );
   }
 }
 
 class PlantsOverview extends StatefulWidget {
   const PlantsOverview({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -42,20 +32,78 @@ class PlantsOverview extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<PlantsOverview> {
-
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final String plantShowing =
+        ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
-      appBar: AppBar(title: Text('Pflanzenübersicht')),
-      body: Center(child: Text('Hauptinhalt')),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      appBar: AppBar(title: Text(plantShowing)),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: Ink.image(
+                image: AssetImage('assets/icon.png'),
+
+              ),
+            ),
+          ),
+          Divider(color: Color.fromRGBO(89, 89, 89, 0.5), thickness: 2),
+          Expanded(
+            flex: 5,
+            child: Center(
+              child: Text(
+                'Hier folgt ein Info-Text zu der Pflanze (Alter, Pflegehinweise,…) \n'
+                'außerdem Sollen auch typische Erscheinungen/Events der Pflanze gezeigt '
+                'werden (Was tun wenn die Pflanze sehr viele braune Blätter bekommt obwohl'
+                ' sie immer gut gegossen wird oder wann die Erdbeere anfängt Früchte zu tragen',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(color: Color.fromRGBO(89, 89, 89, 0.5), thickness: 2),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: TextButton.icon(
+                label: Text('Pflanze löschen'),
+                icon: Icon(Symbols.delete),
+                onPressed: () {
+                  deletePlant();
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  void deletePlant() async {
+    bool? delete = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Löschen der Pflanze'),
+        content: Text(
+          'Bist du dir sicher, dass du die Pflanze löschen möchtest?',
+        ),
+        actions: [
+          TextButton(
+            child: Text('Nein'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: Text('Ja'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+    if (delete == true) {
+      //Delete Stuff and close screen
+    }
+    setState(() {});
   }
 }
