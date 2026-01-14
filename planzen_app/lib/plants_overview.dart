@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'search.dart';
@@ -32,6 +34,27 @@ class PlantsOverview extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<PlantsOverview> {
+  String? imagePath;
+
+  @override
+  void initState() {
+    super.initState();
+
+    imagePath = 'assets/icon.png';
+  }
+
+  defaultImagePicker() {
+    if (imagePath == null) {
+      return Icon(Icons.image, size: 120);
+    }
+
+    if (imagePath!.startsWith('assets/')) {
+      return Image.asset(imagePath!, height: 150, fit: BoxFit.cover);
+    } else {
+      return Image.file(File(imagePath!), height: 150, fit: BoxFit.cover);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final String plantShowing =
@@ -42,14 +65,18 @@ class _MyHomePageState extends State<PlantsOverview> {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
-            child: Center(
-              child: Ink.image(
-                image: AssetImage('assets/icon.png'),
-
-              ),
+            flex: 2,
+            child: Column(
+              children: [
+                Center(child: SizedBox(height: 120, child: defaultImagePicker())),
+                TextButton(
+                  onPressed: pickImage,
+                  child: Text('Eigenes Bild hochladen'),
+                ),
+              ],
             ),
           ),
+
           Divider(color: Color.fromRGBO(89, 89, 89, 0.5), thickness: 2),
           Expanded(
             flex: 5,
@@ -79,6 +106,17 @@ class _MyHomePageState extends State<PlantsOverview> {
         ],
       ),
     );
+  }
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imagePath = pickedFile.path;
+      });
+    }
   }
 
   void deletePlant() async {

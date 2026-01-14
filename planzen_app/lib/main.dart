@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/newplant.dart';
 import 'package:planzen_app/settings.dart';
+import 'hive.dart';
 import 'search.dart';
 import 'achievements.dart';
 import 'impressum.dart';
@@ -9,11 +10,7 @@ import 'plants_overview.dart';
 import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'main.g.dart';
 
-//var for Hive-Keys (easier (Autocompletion); no spelling Mistakes)
-String objectPlantKey = 'plantObjectSaves';
-String dataKey = 'dataSaves';
 
 void main() async {
   await Hive.initFlutter();
@@ -362,6 +359,7 @@ void addPlantMyPlants(
   DateTime lastTime,
   String whatToDo,
   int interval,
+  int id,
 ) {
   AllPlants plant = AllPlants(
     name,
@@ -370,72 +368,38 @@ void addPlantMyPlants(
     lastTime,
     whatToDo,
     interval,
+    id,
   );
   myPlants.add(plant);
 }
 
-@HiveType(typeId: 0)
-class AllPlants {
-  @HiveField(0)
-  String name;
 
-  @HiveField(1)
-  int age;
-
-  @HiveField(2)
-  DateTime prevLastCompletion;
-
-  @HiveField(3)
-  DateTime lastCompletion;
-
-  @HiveField(4)
-  int interval;
-
-  @HiveField(5)
-  String whatToDo;
-
-  AllPlants(
-    this.name,
-    this.age,
-    this.prevLastCompletion,
-    this.lastCompletion,
-    this.whatToDo,
-    this.interval,
-  );
-}
-
-void hivePutMyPlantsList(List<AllPlants> saveList) {
-  var boxHive = Hive.box(objectPlantKey);
-  boxHive.put('plantObjectList', saveList);
-}
 
 void existingPlants() {
-  var boxHiveOpen = Hive.box(dataKey);
-  bool alreadyOpened = boxHiveOpen.get('alreadyOpened', defaultValue: false);
-  if (!alreadyOpened) {
-    addPlantMyPlants('Rose', 2, formatter.parse('08.11.2025'), 'düngen', 14);
-    addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21);
+  if (!isAlreadyOpened()) {
+    addPlantMyPlants('Rose', 2, formatter.parse('08.11.2025'), 'düngen', 14, -1);
+    addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21, -2);
     addPlantMyPlants(
       'Erdbeeren',
       3,
       formatter.parse('31.08.2025'),
       'ernten',
-      6,
+      6, -3
     );
-    addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7);
+    addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7, -4);
     addPlantMyPlants(
       'Löwenzahn',
       1,
       formatter.parse('01.11.2025'),
       'ausrotten',
-      7,
+      7, -5
     );
     addPlantMyPlants(
       'Hanf-Pflanze',
       1,
       formatter.parse('02.11.2025'),
       'verarbeiten',
-      90,
+      90, -6
     );
     hivePutMyPlantsList(myPlants);
   }

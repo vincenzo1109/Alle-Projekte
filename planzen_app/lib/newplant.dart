@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
+import 'hive.dart';
 import 'main.dart';
 
 void main() {
@@ -188,12 +189,11 @@ class _MyHomePageState extends State<NewPlant> {
           TextButton(
             onPressed: () {
               if (intervalOk && ageOk && name != null && interval != null) {
-                wateringBool
-                    ? whatToDo = 'gießen'
-                    : whatToDo = 'nicht angegeben';
-                setState(() {});
-                addPlantMyPlants(name!, age, lastTime, whatToDo, interval!);
-                hivePutMyPlantsList(myPlants);
+                whatToDo = wateringBool ? 'gießen' : 'nicht angegeben';
+                setState(() {
+                  addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId());
+                  hivePutMyPlantsList(myPlants);
+                });
                 Navigator.pop(context);
               } else {
                 setState(() {

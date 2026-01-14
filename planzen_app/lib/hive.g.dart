@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'main.dart';
+part of 'hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -23,13 +23,14 @@ class AllPlantsAdapter extends TypeAdapter<AllPlants> {
       fields[3] as DateTime,
       fields[5] as String,
       fields[4] as int,
+      fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, AllPlants obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class AllPlantsAdapter extends TypeAdapter<AllPlants> {
       ..writeByte(4)
       ..write(obj.interval)
       ..writeByte(5)
-      ..write(obj.whatToDo);
+      ..write(obj.whatToDo)
+      ..writeByte(6)
+      ..write(obj.id);
   }
 
   @override
