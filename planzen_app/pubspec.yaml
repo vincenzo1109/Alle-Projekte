@@ -31,10 +31,10 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/icon.png
+    - assets/image/icon.png
   uses-material-design: true
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon.png"
+  image_path: "assets/image/icon.png"

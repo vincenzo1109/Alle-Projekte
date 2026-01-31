@@ -191,7 +191,7 @@ class _MyHomePageState extends State<NewPlant> {
               if (intervalOk && ageOk && name != null && interval != null) {
                 whatToDo = wateringBool ? 'gießen' : 'nicht angegeben';
                 setState(() {
-                  addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId());
+                  addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId(), 'assets/image/icon.png');
                   hivePutMyPlantsList(myPlants);
                 });
                 Navigator.pop(context);

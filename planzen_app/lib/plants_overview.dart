@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'search.dart';
 import 'main.dart';
+import 'hive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,20 +30,16 @@ class PlantsOverview extends StatefulWidget {
   final String title;
 
   @override
-  State<PlantsOverview> createState() => _MyHomePageState();
+  State<PlantsOverview> createState() => _PlantsOverviewState();
 }
 
-class _MyHomePageState extends State<PlantsOverview> {
+class _PlantsOverviewState extends State<PlantsOverview> {
   String? imagePath;
 
-  @override
-  void initState() {
-    super.initState();
+  late AllPlants currentPlant;
 
-    imagePath = 'assets/icon.png';
-  }
 
-  defaultImagePicker() {
+  getImage() {
     if (imagePath == null) {
       return Icon(Icons.image, size: 120);
     }
@@ -57,18 +53,30 @@ class _MyHomePageState extends State<PlantsOverview> {
 
   @override
   Widget build(BuildContext context) {
-    final String plantShowing =
-        ModalRoute.of(context)!.settings.arguments as String;
+
+    //FIXME raus aus build-methode
+    int givenPlantId = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as int;
+    // TODO List auf Set umstellen
+    currentPlant = myPlants.firstWhere(
+          (plant) => plant.id == givenPlantId,
+    );
+
+    imagePath = currentPlant.imagePath;
 
     return Scaffold(
-      appBar: AppBar(title: Text(plantShowing)),
+      appBar: AppBar(title: Text(currentPlant.name)),
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Column(
               children: [
-                Center(child: SizedBox(height: 120, child: defaultImagePicker())),
+                Center(
+                  child: SizedBox(height: 120, child: getImage()),
+                ),
                 TextButton(
                   onPressed: pickImage,
                   child: Text('Eigenes Bild hochladen'),
@@ -83,9 +91,9 @@ class _MyHomePageState extends State<PlantsOverview> {
             child: Center(
               child: Text(
                 'Hier folgt ein Info-Text zu der Pflanze (Alter, Pflegehinweise,…) \n'
-                'außerdem Sollen auch typische Erscheinungen/Events der Pflanze gezeigt '
-                'werden (Was tun wenn die Pflanze sehr viele braune Blätter bekommt obwohl'
-                ' sie immer gut gegossen wird oder wann die Erdbeere anfängt Früchte zu tragen',
+                    'außerdem Sollen auch typische Erscheinungen/Events der Pflanze gezeigt '
+                    'werden (Was tun wenn die Pflanze sehr viele braune Blätter bekommt obwohl'
+                    ' sie immer gut gegossen wird oder wann die Erdbeere anfängt Früchte zu tragen',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -115,6 +123,8 @@ class _MyHomePageState extends State<PlantsOverview> {
     if (pickedFile != null) {
       setState(() {
         imagePath = pickedFile.path;
+        currentPlant.imagePath = pickedFile.path;
+        hivePutMyPlantsList(myPlants);
       });
     }
   }
@@ -122,22 +132,23 @@ class _MyHomePageState extends State<PlantsOverview> {
   void deletePlant() async {
     bool? delete = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Löschen der Pflanze'),
-        content: Text(
-          'Bist du dir sicher, dass du die Pflanze löschen möchtest?',
-        ),
-        actions: [
-          TextButton(
-            child: Text('Nein'),
-            onPressed: () => Navigator.of(context).pop(false),
+      builder: (context) =>
+          AlertDialog(
+            title: Text('Löschen der Pflanze'),
+            content: Text(
+              'Bist du dir sicher, dass du die Pflanze löschen möchtest?',
+            ),
+            actions: [
+              TextButton(
+                child: Text('Nein'),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+              TextButton(
+                child: Text('Ja'),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+            ],
           ),
-          TextButton(
-            child: Text('Ja'),
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-        ],
-      ),
     );
     if (delete == true) {
       //Delete Stuff and close screen

@@ -52,6 +52,9 @@ class AllPlants {
   @HiveField(6)
   int id;
 
+  @HiveField(7)
+  String imagePath;
+
   AllPlants(
       this.name,
       this.age,
@@ -60,5 +63,6 @@ class AllPlants {
       this.whatToDo,
       this.interval,
       this.id,
+      this.imagePath
       );
 }

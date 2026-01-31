@@ -10,8 +10,6 @@ import 'plants_overview.dart';
 import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-
-
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AllPlantsAdapter()); //Hive-Adapter for Object-Saving
@@ -199,8 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> plantsHomescreen(List<AllPlants> whichList) {
     List<Widget> plantsNext = [];
-    var boxHiveOpen = Hive.box(dataKey);
-    boxHiveOpen.put('alreadyOpened', true);
 
     void sortList() {
       whichList.sort((a, b) {
@@ -230,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.pushNamed(
                 context,
                 '/plants_overview',
-                arguments: plantvar.name,
+                arguments: plantvar.id,
               );
             },
 
@@ -360,6 +356,7 @@ void addPlantMyPlants(
   String whatToDo,
   int interval,
   int id,
+  String path,
 ) {
   AllPlants plant = AllPlants(
     name,
@@ -369,38 +366,72 @@ void addPlantMyPlants(
     whatToDo,
     interval,
     id,
+    path,
   );
   myPlants.add(plant);
 }
 
-
-
 void existingPlants() {
+  var boxHiveOpen = Hive.box(dataKey);
+  const String imagepath = 'assets/image/icon.png';
+
   if (!isAlreadyOpened()) {
-    addPlantMyPlants('Rose', 2, formatter.parse('08.11.2025'), 'düngen', 14, -1);
-    addPlantMyPlants('Himbeere', 4, formattedDate, 'verschneiden', 21, -2);
+    addPlantMyPlants(
+      'Rose',
+      2,
+      formatter.parse('08.11.2025'),
+      'düngen',
+      14,
+      -1,
+      imagepath,
+    );
+    addPlantMyPlants(
+      'Himbeere',
+      4,
+      formattedDate,
+      'verschneiden',
+      21,
+      -2,
+      imagepath,
+    );
     addPlantMyPlants(
       'Erdbeeren',
       3,
       formatter.parse('31.08.2025'),
       'ernten',
-      6, -3
+      6,
+      -3,
+      imagepath,
     );
-    addPlantMyPlants('Alle Blumen', 4, formattedDate, 'gießen', 7, -4);
+    addPlantMyPlants(
+      'Alle Blumen',
+      4,
+      formattedDate,
+      'gießen',
+      7,
+      -4,
+      imagepath,
+    );
     addPlantMyPlants(
       'Löwenzahn',
       1,
       formatter.parse('01.11.2025'),
       'ausrotten',
-      7, -5
+      7,
+      -5,
+      imagepath,
     );
     addPlantMyPlants(
       'Hanf-Pflanze',
       1,
       formatter.parse('02.11.2025'),
       'verarbeiten',
-      90, -6
+      90,
+      -6,
+      imagepath,
     );
     hivePutMyPlantsList(myPlants);
+
+    boxHiveOpen.put('alreadyOpened', true);
   }
 }
