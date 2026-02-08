@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:planzen_app/plant_service.dart';
 
 import 'hive.dart';
 import 'main.dart';
@@ -191,8 +192,8 @@ class _MyHomePageState extends State<NewPlant> {
               if (intervalOk && ageOk && name != null && interval != null) {
                 whatToDo = wateringBool ? 'gießen' : 'nicht angegeben';
                 setState(() {
-                  addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId(), 'assets/image/icon.png');
-                  hivePutMyPlantsList(myPlants);
+                  PlantService.instance().addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId(), 'assets/image/icon.png');
+                  PlantService.instance().saveAllPlants();
                 });
                 Navigator.pop(context);
               } else {

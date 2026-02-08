@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="android.app" target="21" />
+      <module name="android.flutter_plugin_android_lifecycle" target="21" />
+      <module name="android.image_picker_android" target="21" />
+      <module name="android.path_provider_android" target="21" />
+      <module name="gradle" target="21" />
+      <module name="gradle.main" target="11" />
+      <module name="gradle.test" target="11" />
+      <module name="io.flutter.plugins.imagepicker.android.image_picker_android" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

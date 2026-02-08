@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:planzen_app/plant_service.dart';
 import 'main.dart';
-
-void main() {
-  runApp(const MyApp());
-}
+import 'hive.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,10 +30,34 @@ class Search extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Search> {
+  List<AllPlants> matchingPlants = [];
+
+  showMatchingPlants(input) {
+    matchingPlants = PlantService.instance().getAllPlants()
+        .where((plant) => plant.name.contains(input))
+        .toList();
+    for (AllPlants plants in matchingPlants) {
+      debugPrint(plants.name);
+    }
+    //TODO Das nächste: irgendwie die Liste bauen lassen (Homescreen)
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text('Das ist die Searchbox')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: SearchBar(
+          hintText: 'Suchen',
+          leading: Icon(Icons.search),
+          onChanged: (value) {
+            showMatchingPlants(value.toLowerCase());
+          },
+          padding: const WidgetStatePropertyAll<EdgeInsets>(
+            EdgeInsets.symmetric(horizontal: 16.0),
+          ),
+        ),
+      ),
       body: Center(child: Text('Hauptinhalt')),
     );
   }

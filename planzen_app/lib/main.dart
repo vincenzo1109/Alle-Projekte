@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/newplant.dart';
+import 'package:planzen_app/plant_service.dart';
 import 'package:planzen_app/settings.dart';
+import 'package:planzen_app/widgets/plant_item.dart';
 import 'hive.dart';
 import 'search.dart';
 import 'achievements.dart';
@@ -15,6 +17,7 @@ void main() async {
   Hive.registerAdapter(AllPlantsAdapter()); //Hive-Adapter for Object-Saving
   await Hive.openBox(dataKey); //Hive-Create of Box for any other Data
   await Hive.openBox(objectPlantKey); //Hive-Create for plantObjects
+  debugPrint('Hive initialisiert');
   runApp(const MyApp());
 }
 
@@ -26,12 +29,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    existingPlants();
-  }
-
   var darkMode = true;
   var theme = ThemeData.dark();
 
@@ -88,28 +85,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<AllPlants> plantsListHomeScreen = [];
 
   var plantDataBox = Hive.box(dataKey);
   var plantObjectBox = Hive.box(objectPlantKey);
-
-  void getObjectList() {
-    var objectList = plantObjectBox.get('plantObjectList');
-    if (objectList != null) {
-      plantsListHomeScreen = (objectList as List).cast<AllPlants>();
-      myPlants = plantsListHomeScreen;
-    } else {
-      debugPrint('Fehler beim getObjectList()');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    var opened = plantDataBox.get('alreadyOpened', defaultValue: false);
-    opened ? getObjectList() : plantsListHomeScreen = myPlants;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,143 +165,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: RefreshIndicator(
-        child: ListView(children: plantsHomescreen(plantsListHomeScreen)),
+        child: ListView(children: plantsHomescreen()),
         onRefresh: () async {
-          setState(() {});
+          setState(() {
+            debugPrint('Seite refreshed');
+          });
         },
       ),
     );
   }
 
-  List<Widget> plantsHomescreen(List<AllPlants> whichList) {
+  List<Widget> plantsHomescreen() {
     List<Widget> plantsNext = [];
+    var whichList = PlantService.instance().getAllPlants();
 
-    void sortList() {
-      whichList.sort((a, b) {
-        var dueA = a.lastCompletion.add(Duration(days: a.interval));
-        var dueB = b.lastCompletion.add(Duration(days: b.interval));
-
-        return dueA.compareTo(dueB);
-      });
-    }
-
-    sortList();
+    //TODO Cleanup
     for (var plantvar in whichList) {
-      DateTime dueDate = plantvar.lastCompletion.add(
-        Duration(days: plantvar.interval),
-      );
-
-      int doItInDays = dueDate.difference(now).inDays;
-
-      String dueDateString = DateFormat('dd.MM').format(dueDate);
-
-      var expiredSince = now.difference(dueDate).inDays;
-
-      if (dueDate.subtract(Duration(days: 60)).isBefore(DateTime.now())) {
-        plantsNext.add(
-          ListTile(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/plants_overview',
-                arguments: plantvar.id,
-              );
-            },
-
-            tileColor: dueDate.isBefore(DateTime.now())
-                ? (dueDateString == DateFormat('dd.MM').format(now)
-                      ? Colors.blueAccent
-                      : Colors.red)
-                : (null),
-
-            leading: Text(dueDateString, style: TextStyle(fontSize: 20)),
-
-            title: Center(
-              child: Text(
-                '${plantvar.name} ${plantvar.whatToDo}',
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            subtitle: Center(
-              child: Text(
-                dueDateString == DateFormat('dd.MM').format(now)
-                    ? 'Muss heute gemacht werden'
-                    : (dueDate.isBefore(now)
-                          ? (expiredSince == 1
-                                ? 'Seit $expiredSince Tag überfällig'
-                                : 'Seit $expiredSince Tagen überfällig')
-                          : (doItInDays == 1
-                                ? 'In $doItInDays Tag anfällig'
-                                : 'In $doItInDays Tagen anfällig')),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            trailing: IconButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).clearSnackBars();
-                setState(() {
-                  if (dueDate.difference(now).inDays <= 4) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        showCloseIcon: true,
-                        duration: Duration(seconds: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                        action: SnackBarAction(
-                          label: 'Rückgängig',
-                          onPressed: () {
-                            plantvar.lastCompletion =
-                                plantvar.prevLastCompletion;
-                            hivePutMyPlantsList(whichList);
-                            setState(() {});
-                          },
-                        ),
-                        content: Text(
-                          'Wieder etwas erledigt :)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    );
-                    plantvar.prevLastCompletion = plantvar.lastCompletion;
-                    plantvar.lastCompletion = DateTime.now();
-                    hivePutMyPlantsList(whichList);
-                    sortList();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        showCloseIcon: true,
-                        duration: Duration(seconds: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          '${plantvar.name} ${plantvar.whatToDo} hat noch Zeit :-)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                });
-              },
-              icon: Icon(Icons.check),
-            ),
-          ),
-        );
-      }
+      plantsNext.add(PlantItem(plant: plantvar, onChange: () => setState(() {})));
     }
     if (plantsNext.isEmpty) {
       plantsNext.add(
@@ -347,91 +205,3 @@ final formattedDate = formatter.parse(
   '07.11.2025',
 ); // TODO Vorrübergehende Lösung
 
-List<AllPlants> myPlants = [];
-
-void addPlantMyPlants(
-  String name,
-  int age,
-  DateTime lastTime,
-  String whatToDo,
-  int interval,
-  int id,
-  String path,
-) {
-  AllPlants plant = AllPlants(
-    name,
-    age,
-    lastTime.subtract(Duration(days: interval)),
-    lastTime,
-    whatToDo,
-    interval,
-    id,
-    path,
-  );
-  myPlants.add(plant);
-}
-
-void existingPlants() {
-  var boxHiveOpen = Hive.box(dataKey);
-  const String imagepath = 'assets/image/icon.png';
-
-  if (!isAlreadyOpened()) {
-    addPlantMyPlants(
-      'Rose',
-      2,
-      formatter.parse('08.11.2025'),
-      'düngen',
-      14,
-      -1,
-      imagepath,
-    );
-    addPlantMyPlants(
-      'Himbeere',
-      4,
-      formattedDate,
-      'verschneiden',
-      21,
-      -2,
-      imagepath,
-    );
-    addPlantMyPlants(
-      'Erdbeeren',
-      3,
-      formatter.parse('31.08.2025'),
-      'ernten',
-      6,
-      -3,
-      imagepath,
-    );
-    addPlantMyPlants(
-      'Alle Blumen',
-      4,
-      formattedDate,
-      'gießen',
-      7,
-      -4,
-      imagepath,
-    );
-    addPlantMyPlants(
-      'Löwenzahn',
-      1,
-      formatter.parse('01.11.2025'),
-      'ausrotten',
-      7,
-      -5,
-      imagepath,
-    );
-    addPlantMyPlants(
-      'Hanf-Pflanze',
-      1,
-      formatter.parse('02.11.2025'),
-      'verarbeiten',
-      90,
-      -6,
-      imagepath,
-    );
-    hivePutMyPlantsList(myPlants);
-
-    boxHiveOpen.put('alreadyOpened', true);
-  }
-}

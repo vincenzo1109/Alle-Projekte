@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:planzen_app/plant_service.dart';
 import 'main.dart';
 import 'hive.dart';
 
@@ -59,8 +60,9 @@ class _PlantsOverviewState extends State<PlantsOverview> {
         .of(context)!
         .settings
         .arguments as int;
-    // TODO List auf Set umstellen
-    currentPlant = myPlants.firstWhere(
+    // TODO List auf Set umstellen und dann den Lookup in den Service verlagern
+    debugPrint('Searching for plant#$givenPlantId');
+    currentPlant = PlantService.instance().getAllPlants().firstWhere(
           (plant) => plant.id == givenPlantId,
     );
 
@@ -124,7 +126,7 @@ class _PlantsOverviewState extends State<PlantsOverview> {
       setState(() {
         imagePath = pickedFile.path;
         currentPlant.imagePath = pickedFile.path;
-        hivePutMyPlantsList(myPlants);
+        PlantService.instance().saveAllPlants();
       });
     }
   }
