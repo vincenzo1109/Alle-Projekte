@@ -9,7 +9,6 @@ import 'search.dart';
 import 'achievements.dart';
 import 'impressum.dart';
 import 'plants_overview.dart';
-import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -85,7 +84,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   var plantDataBox = Hive.box(dataKey);
   var plantObjectBox = Hive.box(objectPlantKey);
 
@@ -94,12 +92,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+
         title: Text(
           'Plan(t)er:\n Die Pflanzenübersicht',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
+
         iconTheme: IconThemeData(size: 30),
+
         actions: [
           IconButton(
             padding: EdgeInsets.all(15),
@@ -110,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
+
       drawer: Drawer(
         child: ListView(
           children: [
@@ -164,6 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+
       body: RefreshIndicator(
         child: ListView(children: plantsHomescreen()),
         onRefresh: () async {
@@ -175,15 +178,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+
   List<Widget> plantsHomescreen() {
     List<Widget> plantsNext = [];
-    var whichList = PlantService.instance().getAllPlants();
+    List<AllPlants> allPlants = PlantService.instance().getAllPlants();
 
-    //TODO Cleanup
-    for (var plantvar in whichList) {
-      plantsNext.add(PlantItem(plant: plantvar, onChange: () => setState(() {})));
-    }
-    if (plantsNext.isEmpty) {
+    if (allPlants.isNotEmpty) {
+      for (var plantvar in allPlants) {
+        plantsNext.add(
+          PlantItem(plant: plantvar, onChange: () => setState(() {})),
+        );
+      }
+    } else {
       plantsNext.add(
         Center(
           child: Text(
@@ -196,12 +202,3 @@ class _MyHomePageState extends State<MyHomePage> {
     return plantsNext;
   }
 }
-
-DateTime now = DateTime.now();
-DateTime date = DateTime(now.year, now.month, now.day);
-final formatter = DateFormat('dd.MM.yyyy');
-//    String formattedDate = formatter.format(now); //TODO Für richtiges Programm
-final formattedDate = formatter.parse(
-  '07.11.2025',
-); // TODO Vorrübergehende Lösung
-

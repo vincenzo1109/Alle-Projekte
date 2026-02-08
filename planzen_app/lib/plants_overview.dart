@@ -153,7 +153,8 @@ class _PlantsOverviewState extends State<PlantsOverview> {
           ),
     );
     if (delete == true) {
-      //Delete Stuff and close screen
+      //TODO Delete Stuff
+      Navigator.pop(context);
     }
     setState(() {});
   }

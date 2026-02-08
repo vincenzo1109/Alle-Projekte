@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/plant_service.dart';
+import 'package:planzen_app/widgets/plant_item.dart';
 import 'main.dart';
 import 'hive.dart';
 
@@ -32,14 +32,24 @@ class Search extends StatefulWidget {
 class _MyHomePageState extends State<Search> {
   List<AllPlants> matchingPlants = [];
 
-  showMatchingPlants(input) {
-    matchingPlants = PlantService.instance().getAllPlants()
-        .where((plant) => plant.name.contains(input))
+
+  whichMatchingPlants(input) {
+    matchingPlants = PlantService.instance()
+        .getAllPlants()
+        .where((plant) => plant.name.toLowerCase().contains(input))
         .toList();
-    for (AllPlants plants in matchingPlants) {
-      debugPrint(plants.name);
+    setState(() {});
+  }
+
+  showMatchingPlants() {
+    List<Widget> showNextMatchingPlants = [];
+
+    for (AllPlants plant in matchingPlants) {
+      showNextMatchingPlants.add(
+        PlantItem(plant: plant, onChange: () => setState(() {})),
+      );
     }
-    //TODO Das nächste: irgendwie die Liste bauen lassen (Homescreen)
+    return showNextMatchingPlants;
   }
 
   @override
@@ -51,14 +61,14 @@ class _MyHomePageState extends State<Search> {
           hintText: 'Suchen',
           leading: Icon(Icons.search),
           onChanged: (value) {
-            showMatchingPlants(value.toLowerCase());
+            whichMatchingPlants(value.toLowerCase());
           },
           padding: const WidgetStatePropertyAll<EdgeInsets>(
             EdgeInsets.symmetric(horizontal: 16.0),
           ),
         ),
       ),
-      body: Center(child: Text('Hauptinhalt')),
+      body: ListView(children: showMatchingPlants()),
     );
   }
 }
