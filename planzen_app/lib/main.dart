@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:planzen_app/newplant.dart';
-import 'package:planzen_app/plant_service.dart';
+import 'package:planzen_app/plant_task_service.dart';
 import 'package:planzen_app/settings.dart';
 import 'package:planzen_app/widgets/plant_item.dart';
-import 'hive.dart';
-import 'search.dart';
 import 'achievements.dart';
+import 'hive.dart';
 import 'impressum.dart';
 import 'plants_overview.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'search.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -103,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
         actions: [
           IconButton(
-            padding: EdgeInsets.all(15),
-            icon: Icon(Symbols.search),
+            padding: const EdgeInsets.all(15),
+            icon: const Icon(Symbols.search),
             onPressed: () {
               Navigator.pushNamed(context, '/search');
             },
@@ -115,17 +115,17 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(child: Text('Menü')),
+            const DrawerHeader(child: Text('Menü')),
             ListTile(
-              leading: Icon(Symbols.home),
-              title: Text('Home'),
+              leading: const Icon(Symbols.home),
+              title: const Text('Home'),
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Symbols.potted_plant_rounded),
-              title: Text('Pflanzen Details'),
+              leading: const Icon(Symbols.potted_plant_rounded),
+              title: const Text('Pflanzen Details'),
               onTap: () {
                 Navigator.pushNamed(
                   context,
@@ -135,30 +135,30 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Symbols.experiment),
-              title: Text('Errungenschaften'),
+              leading: const Icon(Symbols.experiment),
+              title: const Text('Errungenschaften'),
               onTap: () {
                 Navigator.pushNamed(context, '/achievements');
               },
             ),
             ListTile(
-              leading: Icon(Symbols.add_2_rounded),
-              title: Text('Eine weitere Pflanze hinzufügen'),
+              leading: const Icon(Symbols.add_2_rounded),
+              title: const Text('Eine weitere Pflanze hinzufügen'),
               onTap: () async {
                 await Navigator.pushNamed(context, '/newPlant');
                 setState(() {});
               },
             ),
             ListTile(
-              leading: Icon(Symbols.settings),
-              title: Text('Einstellungen'),
+              leading: const Icon(Symbols.settings),
+              title: const Text('Einstellungen'),
               onTap: () {
                 Navigator.pushNamed(context, '/settings');
               },
             ),
             ListTile(
-              leading: Icon(Symbols.info),
-              title: Text('Impressum'),
+              leading: const Icon(Symbols.info),
+              title: const Text('Impressum'),
               onTap: () {
                 Navigator.pushNamed(context, '/impressum');
               },
@@ -168,37 +168,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: RefreshIndicator(
-        child: ListView(children: plantsHomescreen()),
         onRefresh: () async {
           setState(() {
             debugPrint('Seite refreshed');
           });
         },
+        child: plantsHomescreen(),
       ),
     );
   }
 
+  Widget plantsHomescreen() {
+    List<Widget> nextTasks = [];
+    List<PlantTask> allTasks = PlantTaskService.instance().getAllTasks();
 
-  List<Widget> plantsHomescreen() {
-    List<Widget> plantsNext = [];
-    List<AllPlants> allPlants = PlantService.instance().getAllPlants();
-
-    if (allPlants.isNotEmpty) {
-      for (var plantvar in allPlants) {
-        plantsNext.add(
-          PlantItem(plant: plantvar, onChange: () => setState(() {})),
-        );
-      }
-    } else {
-      plantsNext.add(
-        Center(
-          child: Text(
-            'Es gibt in den nächsten 2 Monaten nichts zu tun',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
+    if (allTasks.isEmpty) {
+      return const Center(
+        child: Text(
+          'Es gibt in den nächsten 2 Monaten nichts zu tun',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
       );
+    } else {
+      return ListView.builder(
+        itemCount: allTasks.length,
+        itemBuilder: (context, index) {
+          return PlantItem(
+            task: allTasks[index],
+            onChange: () => setState(() {}),
+          );
+        },
+      );
     }
-    return plantsNext;
+
+    for (var plantvar in allTasks) {
+      nextTasks.add(PlantItem(task: plantvar, onChange: () => setState(() {})));
+    }
   }
 }

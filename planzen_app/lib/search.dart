@@ -31,7 +31,7 @@ class Search extends StatefulWidget {
 
 class _MyHomePageState extends State<Search> {
   List<AllPlants> matchingPlants = [];
-
+//TODO search in Task-Name/Plant-Name
 
   whichMatchingPlants(input) {
     matchingPlants = PlantService.instance()
@@ -44,11 +44,13 @@ class _MyHomePageState extends State<Search> {
   showMatchingPlants() {
     List<Widget> showNextMatchingPlants = [];
 
-    for (AllPlants plant in matchingPlants) {
+    /* FIXME for (AllPlants plant in matchingPlants) {
       showNextMatchingPlants.add(
-        PlantItem(plant: plant, onChange: () => setState(() {})),
+        PlantItem(task: plant, onChange: () => setState(() {})),
       );
     }
+
+     */
     return showNextMatchingPlants;
   }
 

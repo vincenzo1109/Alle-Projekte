@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:planzen_app/hive.dart';
-import 'package:planzen_app/plant_service.dart';
+import 'package:planzen_app/plant_task_service.dart';
 
 class PlantItem extends StatefulWidget {
-  const PlantItem({super.key, required this.plant, required this.onChange});
+  const PlantItem({super.key, required this.task, required this.onChange});
 
-  final AllPlants plant;
+  final PlantTask task;
 
   final void Function() onChange;
 
@@ -18,11 +18,13 @@ class _PlantItemState extends State<PlantItem> {
 
   @override
   Widget build(BuildContext context) {
-    AllPlants plant = widget.plant;
+    var task = widget.task;
+    var plant = task.getPlant();
+
     DateTime now = DateTime.now();
 
-    DateTime dueDate = plant.lastCompletion.add(
-      Duration(days: plant.interval),
+    DateTime dueDate = task.lastCompletion.add(
+      Duration(days: task.interval),
     );
 
     int doItInDays = dueDate.difference(now).inDays;
@@ -50,7 +52,7 @@ class _PlantItemState extends State<PlantItem> {
 
       title: Center(
         child: Text(
-          '${plant.name} ${plant.whatToDo}',
+          '${plant.name} ${task.whatToDo}',
           style: TextStyle(fontSize: 20),
           textAlign: TextAlign.center,
         ),
@@ -87,7 +89,7 @@ class _PlantItemState extends State<PlantItem> {
                   action: SnackBarAction(
                     label: 'Rückgängig',
                     onPressed: () {
-                      setState(() => PlantService.instance().revertCheckTask(plant));
+                      setState(() => PlantTaskService.instance().revertCheckTask(task));
                       widget.onChange();
                     },
                   ),
@@ -102,7 +104,7 @@ class _PlantItemState extends State<PlantItem> {
                 ),
               );
               setState(() {
-                PlantService.instance().checkTask(plant);
+                PlantTaskService.instance().checkTask(task);
                 widget.onChange();
               });
             } else {
@@ -115,7 +117,7 @@ class _PlantItemState extends State<PlantItem> {
                   ),
                   behavior: SnackBarBehavior.floating,
                   content: Text(
-                    '${plant.name} ${plant.whatToDo} hat noch Zeit :-)',
+                    '${plant.name} ${task.whatToDo} hat noch Zeit :-)',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 17,

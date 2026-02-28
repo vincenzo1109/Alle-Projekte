@@ -192,7 +192,7 @@ class _MyHomePageState extends State<NewPlant> {
               if (intervalOk && ageOk && name != null && interval != null) {
                 whatToDo = wateringBool ? 'gießen' : 'nicht angegeben';
                 setState(() {
-                  PlantService.instance().addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId(), 'assets/image/icon.png');
+                 //FIXME PlantService.instance().addPlantMyPlants(name!, age, lastTime, whatToDo, interval!, buildNewPlantId(), 'assets/image/icon.png');
                   PlantService.instance().saveAllPlants();
                 });
                 Navigator.pop(context);

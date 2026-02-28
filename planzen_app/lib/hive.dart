@@ -1,13 +1,13 @@
 import 'package:hive/hive.dart';
-
+import 'package:planzen_app/plant_service.dart';
+import 'package:planzen_app/plant_task_service.dart';
 
 part 'hive.g.dart';
 
 //var for Hive-Keys (easier (Autocompletion); no spelling Mistakes)
 const String dataKey = 'dataSaves';
-const String idKey='maxPlantId';
+const String idKey = 'maxPlantId';
 const String objectPlantKey = 'plantObjectSaves';
-
 
 int buildNewPlantId() {
   var box = Hive.box(objectPlantKey);
@@ -23,11 +23,14 @@ bool isAlreadyOpened() {
   return alreadyOpened;
 }
 
-
 void hivePutMyPlantsList(List<AllPlants> saveList) {
   var boxHive = Hive.box(objectPlantKey);
   boxHive.put('plantObjectList', saveList);
 }
+
+
+
+
 
 @HiveType(typeId: 0)
 class AllPlants {
@@ -38,31 +41,43 @@ class AllPlants {
   int age;
 
   @HiveField(2)
-  DateTime prevLastCompletion;
-
-  @HiveField(3)
-  DateTime lastCompletion;
-
-  @HiveField(4)
-  int interval;
-
-  @HiveField(5)
-  String whatToDo;
-
-  @HiveField(6)
   int id;
 
-  @HiveField(7)
+  @HiveField(3)
   String imagePath;
 
-  AllPlants(
-      this.name,
-      this.age,
-      this.prevLastCompletion,
-      this.lastCompletion,
-      this.whatToDo,
-      this.interval,
-      this.id,
-      this.imagePath
-      );
+  AllPlants(this.name, this.age, this.id, this.imagePath);
+
+  void addTask(String whatToDo, int interval, DateTime lastCompletion){
+    var task = PlantTask(id, whatToDo, interval, lastCompletion);
+    PlantTaskService.instance().insertTask(task);
+  }
+}
+
+@HiveType(typeId: 1)
+class PlantTask {
+  @HiveField(0)
+  String whatToDo;
+
+  @HiveField(1)
+  int interval;
+
+  DateTime? prevLastCompletion;
+
+  @HiveField(2)
+  DateTime lastCompletion;
+
+  @HiveField(3)
+  int plantId;
+
+  PlantTask(
+    this.plantId,
+    this.whatToDo,
+    this.interval,
+    this.lastCompletion
+  );
+
+  AllPlants getPlant() {
+    return PlantService.instance().getPlant(plantId);
+  }
 }
