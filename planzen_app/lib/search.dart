@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planzen_app/plant_service.dart';
+import 'package:planzen_app/plant_task_service.dart';
 import 'package:planzen_app/widgets/plant_item.dart';
 import 'main.dart';
 import 'hive.dart';
@@ -26,23 +27,36 @@ class Search extends StatefulWidget {
   final String title;
 
   @override
-  State<Search> createState() => _MyHomePageState();
+  State<Search> createState() => SearchState();
 }
 
-class _MyHomePageState extends State<Search> {
-  List<AllPlants> matchingPlants = [];
-//TODO search in Task-Name/Plant-Name
+class SearchState extends State<Search> {
+  List<PlantTask> matchingTasks = [];
+  List<Widget> taskWidgets = [];
+  //TODO search in Task-Name/Plant-Name
 
   whichMatchingPlants(input) {
-    matchingPlants = PlantService.instance()
-        .getAllPlants()
-        .where((plant) => plant.name.toLowerCase().contains(input))
-        .toList();
-    setState(() {});
+    setState(() {
+      matchingTasks = PlantTaskService.instance()
+          .getAllTasks()
+          .where((task) => task.whatToDo.toLowerCase().contains(input))
+          .toList();
+/*      matchingTasks = PlantService.instance()
+          .getAllPlants()
+          .where((plant) => plant.name.toLowerCase().contains(input))
+          .toList();
+*/
+      taskWidgets=  matchingTasks.map(
+              (task) => PlantItem(task: task, onChange: () => setState(() {}))
+      ).toList();
+
+    });
   }
 
-  showMatchingPlants() {
+  getTaskWidgets() {
     List<Widget> showNextMatchingPlants = [];
+
+
 
     /* FIXME for (AllPlants plant in matchingPlants) {
       showNextMatchingPlants.add(
@@ -70,7 +84,7 @@ class _MyHomePageState extends State<Search> {
           ),
         ),
       ),
-      body: ListView(children: showMatchingPlants()),
+      body: ListView(children: taskWidgets),
     );
   }
 }

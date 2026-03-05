@@ -18,9 +18,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/tiefkuehl_speicher/build" />
-      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/.dart_tool" />
-      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/.pub" />
-      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/build" />
       <excludeFolder url="file://$MODULE_DIR$/Clicker Game/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/Clicker Game/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/Clicker Game/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/build" />
@@ -45,6 +42,9 @@
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/build" />
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/authenticator_app_backup/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/build" />
