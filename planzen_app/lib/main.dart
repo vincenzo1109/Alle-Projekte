@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:planzen_app/editTask.dart';
 import 'package:planzen_app/newplant.dart';
 import 'package:planzen_app/plant_task_service.dart';
 import 'package:planzen_app/settings.dart';
@@ -14,6 +15,7 @@ import 'search.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(AllPlantsAdapter()); //Hive-Adapter for Object-Saving
+  Hive.registerAdapter(PlantTaskAdapter()); //Hive-Adapter for Plant-Tasks
   await Hive.openBox(dataKey); //Hive-Create of Box for any other Data
   await Hive.openBox(objectPlantKey); //Hive-Create for plantObjects
   debugPrint('Hive initialisiert');
@@ -69,6 +71,7 @@ class MyAppState extends State<MyApp> {
         '/plants_overview': (context) =>
             const PlantsOverview(title: 'plants_overview'),
         '/newPlant': (context) => const NewPlant(title: 'newPlant'),
+        '/editTask': (context) => const EditTask(),
       }, //easier to switch between Screens; its the declaration of the routes
     );
   }
@@ -170,7 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: RefreshIndicator(
         onRefresh: () async {
           setState(() {
-            debugPrint('Seite refreshed');
+            plantsHomescreen();
+            debugPrint('Refresh');
           });
         },
         child: plantsHomescreen(),
@@ -179,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget plantsHomescreen() {
-    List<Widget> nextTasks = [];
+    List<Widget> nextTasks = [];//TODO only show task in next two months
     List<PlantTask> allTasks = PlantTaskService.instance().getAllTasks();
 
     if (allTasks.isEmpty) {
@@ -201,8 +205,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
 
-    for (var plantvar in allTasks) {
+    /* for (var plantvar in allTasks) {
       nextTasks.add(PlantItem(task: plantvar, onChange: () => setState(() {})));
-    }
+     */
   }
 }

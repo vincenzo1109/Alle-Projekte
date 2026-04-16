@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:planzen_app/hive.dart';
+import 'package:collection/collection.dart';
 
 class PlantService {
   static final PlantService _service = PlantService().._readAllPlants();
@@ -17,6 +18,7 @@ class PlantService {
   }
 
   AllPlants getPlant(int id) {
+    debugPrint('Plant ID: $id');
     return allPlants.firstWhere((plant) => plant.id == id);
   }
 

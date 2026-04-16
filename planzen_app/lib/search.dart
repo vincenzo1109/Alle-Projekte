@@ -33,39 +33,18 @@ class Search extends StatefulWidget {
 class SearchState extends State<Search> {
   List<PlantTask> matchingTasks = [];
   List<Widget> taskWidgets = [];
-  //TODO search in Task-Name/Plant-Name
 
   whichMatchingPlants(input) {
     setState(() {
       matchingTasks = PlantTaskService.instance()
           .getAllTasks()
-          .where((task) => task.whatToDo.toLowerCase().contains(input))
+          .where((task) => task.whatToDo.toLowerCase().contains(input) || task.getPlant().name.toLowerCase().contains(input))
           .toList();
-/*      matchingTasks = PlantService.instance()
-          .getAllPlants()
-          .where((plant) => plant.name.toLowerCase().contains(input))
-          .toList();
-*/
       taskWidgets=  matchingTasks.map(
               (task) => PlantItem(task: task, onChange: () => setState(() {}))
       ).toList();
 
     });
-  }
-
-  getTaskWidgets() {
-    List<Widget> showNextMatchingPlants = [];
-
-
-
-    /* FIXME for (AllPlants plant in matchingPlants) {
-      showNextMatchingPlants.add(
-        PlantItem(task: plant, onChange: () => setState(() {})),
-      );
-    }
-
-     */
-    return showNextMatchingPlants;
   }
 
   @override
